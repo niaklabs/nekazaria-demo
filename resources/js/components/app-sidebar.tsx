@@ -1,7 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { Baby, Bell, Camera, Home, MessageCircle } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -18,22 +17,29 @@ import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Mi Explotación',
         href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
+        icon: Home,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Escanear Crotal',
+        href: '/scanner',
+        icon: Camera,
+    },
+    {
+        title: 'Comunicar Nacimiento',
+        href: '/nacimientos/crear',
+        icon: Baby,
+    },
+    {
+        title: 'Normativa',
+        href: '/normativa',
+        icon: Bell,
+    },
+    {
+        title: 'NekazarIA Chat',
+        href: '/chat',
+        icon: MessageCircle,
     },
 ];
 
@@ -57,7 +63,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

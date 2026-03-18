@@ -1,11 +1,11 @@
 {
-    "name": "Nekarzaria",
-    "short_name": "Nekarzaria",
-    "description": "Nekarzaria App",
+    "name": "NekazarIA",
+    "short_name": "NekazarIA",
+    "description": "NekazarIA — Gestión ganadera inteligente",
     "start_url": "/dashboard",
     "display": "standalone",
-    "background_color": "#0a0a0a",
-    "theme_color": "#0a0a0a",
+    "background_color": "#FFFFFF",
+    "theme_color": "#E53935",
     "orientation": "portrait-primary",
     "icons": [
         {

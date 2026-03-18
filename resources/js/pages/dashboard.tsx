@@ -1,12 +1,40 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { Baby, Bell, Camera, MessageCircle } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import type { BreadcrumbItem, SharedData } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Mi Explotación',
         href: dashboard(),
+    },
+];
+
+const quickActions = [
+    {
+        title: 'Comunicar Nacimiento',
+        description: 'Registrar el nacimiento de un nuevo animal',
+        href: '/nacimientos/crear',
+        icon: Baby,
+    },
+    {
+        title: 'Escanear Crotal',
+        description: 'Identificar un animal con la cámara',
+        href: '/scanner',
+        icon: Camera,
+    },
+    {
+        title: 'Normativa',
+        description: 'Alertas y plazos pendientes',
+        href: '/normativa',
+        icon: Bell,
+    },
+    {
+        title: 'NekazarIA Chat',
+        description: 'Pregunta lo que necesites',
+        href: '/chat',
+        icon: MessageCircle,
     },
 ];
 
@@ -24,53 +52,29 @@ export default function Dashboard() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
-            <style>{`
-                @keyframes gradient-shift {
-                    0%, 100% { background-position: 0% 50%; }
-                    50% { background-position: 100% 50%; }
-                }
-                @keyframes fade-in-up {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes float {
-                    0%, 100% { transform: translateY(0) rotate(0deg); }
-                    50% { transform: translateY(-20px) rotate(5deg); }
-                }
-                .gradient-text {
-                    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
-                    background-size: 300% 300%;
-                    animation: gradient-shift 4s ease infinite;
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                }
-                .fade-in-1 { animation: fade-in-up 0.8s ease forwards; }
-                .fade-in-2 { animation: fade-in-up 0.8s ease 0.2s forwards; opacity: 0; }
-                .fade-in-3 { animation: fade-in-up 0.8s ease 0.4s forwards; opacity: 0; }
-                .float-1 { animation: float 6s ease-in-out infinite; }
-                .float-2 { animation: float 8s ease-in-out 1s infinite; }
-                .float-3 { animation: float 7s ease-in-out 2s infinite; }
-            `}</style>
-            <div className="relative flex h-full flex-1 flex-col items-center justify-center overflow-hidden p-8">
-                {/* Decorative floating shapes */}
-                <div className="float-1 absolute top-16 left-16 h-20 w-20 rounded-full bg-purple-500/10 blur-xl" />
-                <div className="float-2 absolute right-20 bottom-20 h-32 w-32 rounded-full bg-pink-500/10 blur-xl" />
-                <div className="float-3 absolute top-1/3 right-1/4 h-16 w-16 rounded-full bg-indigo-500/10 blur-xl" />
+            <Head title="Mi Explotación" />
+            <div className="flex flex-col gap-6 p-6">
+                <div>
+                    <h1 className="text-2xl font-bold">Hola, {firstName}!</h1>
+                    <p className="text-sm font-medium text-muted-foreground capitalize">{dateString}</p>
+                </div>
 
-                <div className="relative z-10 text-center">
-                    <h1 className="gradient-text fade-in-1 text-6xl font-bold tracking-tight md:text-8xl">
-                        Hola, {firstName}!
-                    </h1>
-
-                    <p className="fade-in-2 mt-6 text-xl text-neutral-500 dark:text-neutral-400 md:text-2xl">
-                        Bienvenido a Nekarzaria
-                    </p>
-
-                    <p className="fade-in-3 mt-4 text-sm capitalize text-neutral-400 dark:text-neutral-500">
-                        {dateString}
-                    </p>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {quickActions.map((action) => (
+                        <Link
+                            key={action.href}
+                            href={action.href}
+                            className="flex items-start gap-4 border-2 border-black p-4 transition-colors hover:bg-secondary"
+                        >
+                            <div className="flex size-10 shrink-0 items-center justify-center bg-primary text-primary-foreground">
+                                <action.icon className="size-5" />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold">{action.title}</p>
+                                <p className="text-xs text-muted-foreground">{action.description}</p>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
         </AppLayout>
