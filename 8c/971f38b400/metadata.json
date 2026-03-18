@@ -3,9 +3,10 @@
   "checkpoint_id": "8c971f38b400",
   "strategy": "manual-commit",
   "branch": "develop",
-  "checkpoints_count": 7,
+  "checkpoints_count": 8,
   "files_touched": [
     "app/Http/Controllers/DashboardController.php",
+    "app/Http/Controllers/RegulationController.php",
     "app/Models/CampaignAnimal.php",
     "app/Models/Exploitation.php",
     "app/Models/Regulation.php",
@@ -72,13 +73,20 @@
       "context": "/8c/971f38b400/4/context.md",
       "content_hash": "/8c/971f38b400/4/content_hash.txt",
       "prompt": "/8c/971f38b400/4/prompt.txt"
+    },
+    {
+      "metadata": "/8c/971f38b400/5/metadata.json",
+      "transcript": "/8c/971f38b400/5/full.jsonl",
+      "context": "/8c/971f38b400/5/context.md",
+      "content_hash": "/8c/971f38b400/5/content_hash.txt",
+      "prompt": "/8c/971f38b400/5/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1706,
-    "cache_creation_tokens": 367426,
-    "cache_read_tokens": 30370195,
-    "output_tokens": 77531,
-    "api_call_count": 360
+    "input_tokens": 2232,
+    "cache_creation_tokens": 389821,
+    "cache_read_tokens": 30572148,
+    "output_tokens": 79397,
+    "api_call_count": 368
   }
 }
