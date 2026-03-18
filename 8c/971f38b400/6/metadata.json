@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "8c971f38b400",
+  "session_id": "266fc4d0-9a4d-4647-9ff4-2b0b8e9257a5",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T17:06:15.96039Z",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "app/Http/Controllers/BirthRegistrationController.php",
+    "app/Http/Middleware/HandleInertiaRequests.php",
+    "resources/js/pages/nacimientos/crear.tsx",
+    "resources/js/types/global.d.ts",
+    "step1-sub.png",
+    "step1.png",
+    "step2-madre.png",
+    "wizard-s2-madre.png",
+    "wizard-step1.png",
+    "wizard-step2.png"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 201,
+    "cache_creation_tokens": 124543,
+    "cache_read_tokens": 18028140,
+    "output_tokens": 36880,
+    "api_call_count": 188
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T17:06:15.808439Z",
+    "agent_lines": 18,
+    "human_added": 4105,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 4126,
+    "agent_percentage": 0.4362578768783325
+  }
+}

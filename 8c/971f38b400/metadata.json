@@ -3,10 +3,12 @@
   "checkpoint_id": "8c971f38b400",
   "strategy": "manual-commit",
   "branch": "develop",
-  "checkpoints_count": 8,
+  "checkpoints_count": 10,
   "files_touched": [
+    "app/Http/Controllers/BirthRegistrationController.php",
     "app/Http/Controllers/DashboardController.php",
     "app/Http/Controllers/RegulationController.php",
+    "app/Http/Middleware/HandleInertiaRequests.php",
     "app/Models/CampaignAnimal.php",
     "app/Models/Exploitation.php",
     "app/Models/Regulation.php",
@@ -27,7 +29,9 @@
     "resources/js/components/ui/sidebar.tsx",
     "resources/js/components/ui/toggle.tsx",
     "resources/js/pages/dashboard.tsx",
+    "resources/js/pages/nacimientos/crear.tsx",
     "resources/js/pages/normativa/index.tsx",
+    "resources/js/types/global.d.ts",
     "routes/web.php",
     "step1-sub.png",
     "step1.png",
@@ -80,13 +84,20 @@
       "context": "/8c/971f38b400/5/context.md",
       "content_hash": "/8c/971f38b400/5/content_hash.txt",
       "prompt": "/8c/971f38b400/5/prompt.txt"
+    },
+    {
+      "metadata": "/8c/971f38b400/6/metadata.json",
+      "transcript": "/8c/971f38b400/6/full.jsonl",
+      "context": "/8c/971f38b400/6/context.md",
+      "content_hash": "/8c/971f38b400/6/content_hash.txt",
+      "prompt": "/8c/971f38b400/6/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2232,
-    "cache_creation_tokens": 389821,
-    "cache_read_tokens": 30572148,
-    "output_tokens": 79397,
-    "api_call_count": 368
+    "input_tokens": 2433,
+    "cache_creation_tokens": 514364,
+    "cache_read_tokens": 48600288,
+    "output_tokens": 116277,
+    "api_call_count": 556
   }
 }
