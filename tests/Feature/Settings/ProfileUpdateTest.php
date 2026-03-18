@@ -1,8 +1,9 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -58,7 +59,7 @@ test('user can delete their account', function () {
     $response = $this
         ->actingAs($user)
         ->delete(route('profile.destroy'), [
-            'password' => 'password',
+            'password' => 'niak2026',
         ]);
 
     $response

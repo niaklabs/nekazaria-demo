@@ -1,11 +1,12 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 test('security page is displayed', function () {
     $this->skipUnlessFortifyFeature(Features::twoFactorAuthentication());
@@ -86,7 +87,7 @@ test('password can be updated', function () {
         ->actingAs($user)
         ->from(route('security.edit'))
         ->put(route('user-password.update'), [
-            'current_password' => 'password',
+            'current_password' => 'niak2026',
             'password' => 'new-password',
             'password_confirmation' => 'new-password',
         ]);
