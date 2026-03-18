@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "25f9dc310ca9",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/specs/00-design-guidelines.md",
+    "docs/specs/01-wizard-comunicar-nacimiento.md",
+    "docs/specs/02-krotal-scanner.md",
+    "docs/specs/03-regulations-screen.md",
+    "docs/specs/04-ai-chatbot.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/25/f9dc310ca9/0/metadata.json",
+      "transcript": "/25/f9dc310ca9/0/full.jsonl",
+      "context": "/25/f9dc310ca9/0/context.md",
+      "content_hash": "/25/f9dc310ca9/0/content_hash.txt",
+      "prompt": "/25/f9dc310ca9/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 65,
+    "cache_creation_tokens": 267270,
+    "cache_read_tokens": 3130553,
+    "output_tokens": 27951,
+    "api_call_count": 36
+  }
+}
