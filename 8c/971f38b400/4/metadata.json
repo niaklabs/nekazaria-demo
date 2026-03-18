@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "8c971f38b400",
+  "session_id": "d0e30a00-06bc-4189-868d-70e6ca1d8eeb",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T16:56:19.345104Z",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "database/factories/CampaignAnimalFactory.php",
+    "database/factories/RegulationFactory.php",
+    "database/factories/SanitaryCampaignFactory.php",
+    "resources/js/components/ui/breadcrumb.tsx",
+    "resources/js/components/ui/button.tsx",
+    "resources/js/components/ui/input.tsx",
+    "resources/js/components/ui/sidebar.tsx",
+    "resources/js/components/ui/toggle.tsx",
+    "resources/js/pages/normativa/index.tsx",
+    "routes/web.php",
+    "tests/Feature/RegulationTest.php"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 606,
+    "cache_creation_tokens": 102911,
+    "cache_read_tokens": 8279932,
+    "output_tokens": 22683,
+    "api_call_count": 122
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T16:56:19.171051Z",
+    "agent_lines": 276,
+    "human_added": 3886,
+    "human_modified": 42,
+    "human_removed": 0,
+    "total_committed": 4204,
+    "agent_percentage": 6.565176022835395
+  }
+}

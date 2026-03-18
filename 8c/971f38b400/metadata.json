@@ -3,7 +3,7 @@
   "checkpoint_id": "8c971f38b400",
   "strategy": "manual-commit",
   "branch": "develop",
-  "checkpoints_count": 5,
+  "checkpoints_count": 7,
   "files_touched": [
     "app/Http/Controllers/DashboardController.php",
     "app/Models/CampaignAnimal.php",
@@ -20,6 +20,11 @@
     "resources/js/components/notification-bell.tsx",
     "resources/js/components/species-filter.tsx",
     "resources/js/components/sub-exploitation-card.tsx",
+    "resources/js/components/ui/breadcrumb.tsx",
+    "resources/js/components/ui/button.tsx",
+    "resources/js/components/ui/input.tsx",
+    "resources/js/components/ui/sidebar.tsx",
+    "resources/js/components/ui/toggle.tsx",
     "resources/js/pages/dashboard.tsx",
     "resources/js/pages/normativa/index.tsx",
     "routes/web.php",
@@ -60,13 +65,20 @@
       "context": "/8c/971f38b400/3/context.md",
       "content_hash": "/8c/971f38b400/3/content_hash.txt",
       "prompt": "/8c/971f38b400/3/prompt.txt"
+    },
+    {
+      "metadata": "/8c/971f38b400/4/metadata.json",
+      "transcript": "/8c/971f38b400/4/full.jsonl",
+      "context": "/8c/971f38b400/4/context.md",
+      "content_hash": "/8c/971f38b400/4/content_hash.txt",
+      "prompt": "/8c/971f38b400/4/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1100,
-    "cache_creation_tokens": 264515,
-    "cache_read_tokens": 22090263,
-    "output_tokens": 54848,
-    "api_call_count": 238
+    "input_tokens": 1706,
+    "cache_creation_tokens": 367426,
+    "cache_read_tokens": 30370195,
+    "output_tokens": 77531,
+    "api_call_count": 360
   }
 }
