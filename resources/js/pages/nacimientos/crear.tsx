@@ -126,7 +126,7 @@ function Step2({ animals, selectedId, onSelect }: { animals: Animal[]; selectedI
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder="Buscar por crotal o nombre..."
-                    className="h-[52px] flex-1 bg-[#F5F5F5] px-[18px] text-sm"
+                    className="h-[52px] flex-1 bg-[#F5F5F5] px-[18px] text-base md:text-sm"
                 />
                 <button
                     onClick={() => router.visit('/scanner?returnTo=/nacimientos/crear')}
@@ -214,7 +214,7 @@ function Step4({ motherBreed, calves, onUpdate }: { motherBreed: string; calves:
                         </div>
                         <div>
                             <label className="text-xs font-semibold text-[#757575]">Fecha de nacimiento</label>
-                            <input type="date" value={calf.birth_date} onChange={(e) => updateCalf(i, 'birth_date', e.target.value)} className="mt-1 h-[44px] w-full bg-[#F5F5F5] px-3 text-sm" />
+                            <input type="date" value={calf.birth_date} onChange={(e) => updateCalf(i, 'birth_date', e.target.value)} className="mt-1 h-[44px] w-full min-w-0 bg-[#F5F5F5] px-3 text-base md:text-sm" />
                             {daysAgo > 7 && <p className="mt-1 text-xs font-medium text-[#E65100]">Supera el plazo legal de 7 días. Se recomienda registrarlo cuanto antes.</p>}
                         </div>
                         <div>
@@ -229,11 +229,11 @@ function Step4({ motherBreed, calves, onUpdate }: { motherBreed: string; calves:
                         </div>
                         <div>
                             <label className="text-xs font-semibold text-[#757575]">Raza</label>
-                            <input type="text" value={calf.breed} onChange={(e) => updateCalf(i, 'breed', e.target.value)} className="mt-1 h-[44px] w-full bg-[#F5F5F5] px-3 text-sm" />
+                            <input type="text" value={calf.breed} onChange={(e) => updateCalf(i, 'breed', e.target.value)} className="mt-1 h-[44px] w-full bg-[#F5F5F5] px-3 text-base md:text-sm" />
                         </div>
                         <div>
                             <label className="text-xs font-semibold text-[#757575]">Nombre (opcional)</label>
-                            <input type="text" value={calf.name} onChange={(e) => updateCalf(i, 'name', e.target.value)} className="mt-1 h-[44px] w-full bg-[#F5F5F5] px-3 text-sm" placeholder="Ej: Txuri" />
+                            <input type="text" value={calf.name} onChange={(e) => updateCalf(i, 'name', e.target.value)} className="mt-1 h-[44px] w-full bg-[#F5F5F5] px-3 text-base md:text-sm" placeholder="Ej: Txuri" />
                         </div>
                     </div>
                 );
