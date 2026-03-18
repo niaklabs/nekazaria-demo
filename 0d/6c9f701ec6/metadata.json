@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "0d6c9f701ec6",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "resources/js/layouts/auth/auth-card-layout.tsx",
+    "resources/js/layouts/auth/auth-split-layout.tsx",
+    "resources/js/layouts/settings/layout.tsx",
+    "resources/js/pages/settings/appearance.tsx",
+    "resources/js/pages/welcome.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0d/6c9f701ec6/0/metadata.json",
+      "transcript": "/0d/6c9f701ec6/0/full.jsonl",
+      "context": "/0d/6c9f701ec6/0/context.md",
+      "content_hash": "/0d/6c9f701ec6/0/content_hash.txt",
+      "prompt": "/0d/6c9f701ec6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 7761,
+    "cache_read_tokens": 1663711,
+    "output_tokens": 1054,
+    "api_call_count": 8
+  }
+}

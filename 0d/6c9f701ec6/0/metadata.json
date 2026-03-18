@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "0d6c9f701ec6",
+  "session_id": "f0269f2b-088f-45c1-9d85-eecbaba30409",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T00:48:53.812585Z",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "resources/js/layouts/auth/auth-card-layout.tsx",
+    "resources/js/layouts/auth/auth-split-layout.tsx",
+    "resources/js/layouts/settings/layout.tsx",
+    "resources/js/pages/settings/appearance.tsx",
+    "resources/js/pages/welcome.tsx"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "4cb28ea8-0442-4a97-ba4f-418c55ec808e",
+  "checkpoint_transcript_start": 717,
+  "transcript_lines_at_start": 717,
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 7761,
+    "cache_read_tokens": 1663711,
+    "output_tokens": 1054,
+    "api_call_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T00:48:53.685821Z",
+    "agent_lines": 0,
+    "human_added": 32,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 32,
+    "agent_percentage": 0
+  }
+}
