@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.2",
   "checkpoint_id": "8c971f38b400",
+  "session_id": "eb04f179-5af5-4552-8376-0024f1c0ccfe",
   "strategy": "manual-commit",
+  "created_at": "2026-03-18T16:54:11.262533Z",
   "branch": "develop",
-  "checkpoints_count": 3,
+  "checkpoints_count": 2,
   "files_touched": [
     "app/Http/Controllers/DashboardController.php",
     "app/Models/CampaignAnimal.php",
@@ -29,34 +31,22 @@
     "wizard-step1.png",
     "wizard-step2.png"
   ],
-  "sessions": [
-    {
-      "metadata": "/8c/971f38b400/0/metadata.json",
-      "transcript": "/8c/971f38b400/0/full.jsonl",
-      "context": "/8c/971f38b400/0/context.md",
-      "content_hash": "/8c/971f38b400/0/content_hash.txt",
-      "prompt": "/8c/971f38b400/0/prompt.txt"
-    },
-    {
-      "metadata": "/8c/971f38b400/1/metadata.json",
-      "transcript": "/8c/971f38b400/1/full.jsonl",
-      "context": "/8c/971f38b400/1/context.md",
-      "content_hash": "/8c/971f38b400/1/content_hash.txt",
-      "prompt": "/8c/971f38b400/1/prompt.txt"
-    },
-    {
-      "metadata": "/8c/971f38b400/2/metadata.json",
-      "transcript": "/8c/971f38b400/2/full.jsonl",
-      "context": "/8c/971f38b400/2/context.md",
-      "content_hash": "/8c/971f38b400/2/content_hash.txt",
-      "prompt": "/8c/971f38b400/2/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "339ac831-8de5-4a3d-a59b-f669fd46c97d",
   "token_usage": {
-    "input_tokens": 195,
-    "cache_creation_tokens": 214552,
-    "cache_read_tokens": 13185822,
-    "output_tokens": 41347,
-    "api_call_count": 150
+    "input_tokens": 155,
+    "cache_creation_tokens": 126039,
+    "cache_read_tokens": 12440373,
+    "output_tokens": 31067,
+    "api_call_count": 130
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T16:54:11.114015Z",
+    "agent_lines": 0,
+    "human_added": 2490,
+    "human_modified": 850,
+    "human_removed": 0,
+    "total_committed": 3298,
+    "agent_percentage": 0
   }
 }
