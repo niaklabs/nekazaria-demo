@@ -19,7 +19,7 @@ class BirthRegistrationController extends Controller
         $exploitation = $request->user()
             ->exploitations()
             ->with(['subExploitations.animals'])
-            ->firstOrFail();
+            ->first();
 
         return Inertia::render('nacimientos/crear', [
             'exploitation' => $exploitation,

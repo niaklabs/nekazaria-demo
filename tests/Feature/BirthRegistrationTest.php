@@ -26,6 +26,16 @@ test('authenticated users can visit the birth registration create page', functio
     $response->assertOk();
 });
 
+test('authenticated users without exploitation can visit the birth registration create page', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user);
+
+    $response = $this->get(route('nacimientos.create'));
+    $response->assertOk();
+    $response->assertInertia(fn ($page) => $page->where('exploitation', null));
+});
+
 test('birth registration can be stored with a single calf', function () {
     $user = User::factory()->create();
     $exploitation = Exploitation::factory()->create(['user_id' => $user->id]);

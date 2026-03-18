@@ -38,7 +38,7 @@ interface SuccessData {
 }
 
 interface Props {
-    exploitation: Exploitation;
+    exploitation: Exploitation | null;
     success?: SuccessData | null;
 }
 
@@ -471,7 +471,17 @@ export default function CrearNacimiento({ exploitation, success }: Props) {
                     </>
                 )}
 
-                {step === 0 && <Step1 subExploitations={exploitation.sub_exploitations} onSelect={handleSubSelect} />}
+                {step === 0 && !exploitation && (
+                    <div className="flex flex-col items-center gap-4 py-12 text-center">
+                        <Baby className="size-12 text-[#BDBDBD]" />
+                        <h2 className="text-2xl font-bold">Sin explotación asignada</h2>
+                        <p className="text-sm leading-[1.4] text-[#757575]">No tienes ninguna explotación asociada a tu cuenta. Contacta con tu administrador para que te asigne una.</p>
+                        <button onClick={() => router.visit('/dashboard')} className="mt-2 border-2 border-black px-6 py-3 text-sm font-semibold">
+                            Volver al panel
+                        </button>
+                    </div>
+                )}
+                {step === 0 && exploitation && <Step1 subExploitations={exploitation.sub_exploitations} onSelect={handleSubSelect} />}
                 {step === 1 && subExploitation && <Step2 animals={subExploitation.animals} selectedId={motherId} onSelect={handleMotherSelect} />}
                 {step === 2 && subExploitation && <Step3 animals={subExploitation.animals} selectedId={fatherId} onSelect={setFatherId} onSkip={() => { setFatherId(null); setStep(3); }} />}
                 {step === 3 && subExploitation && (
