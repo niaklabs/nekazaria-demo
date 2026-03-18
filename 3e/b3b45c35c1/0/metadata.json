@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "3eb3b45c35c1",
+  "session_id": "4c27689f-f11a-43d4-a00c-5e323a368d06",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T22:12:00.78421Z",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "lang/en/auth.php",
+    "lang/en/pagination.php",
+    "lang/en/passwords.php",
+    "lang/en/validation.php",
+    "lang/es.json",
+    "lang/es/auth.php",
+    "lang/es/pagination.php",
+    "lang/es/passwords.php",
+    "lang/es/validation.php",
+    "resources/js/components/password-input.tsx",
+    "resources/js/pages/auth/login.tsx",
+    "resources/js/pages/normativa/campanas/index.tsx"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "be9fdb36-0e70-466a-a534-e9f8c6491bfd",
+  "token_usage": {
+    "input_tokens": 38,
+    "cache_creation_tokens": 32939,
+    "cache_read_tokens": 1114947,
+    "output_tokens": 10244,
+    "api_call_count": 32
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T22:12:00.461249Z",
+    "agent_lines": 492,
+    "human_added": 96,
+    "human_modified": 213,
+    "human_removed": 0,
+    "total_committed": 801,
+    "agent_percentage": 61.42322097378277
+  }
+}

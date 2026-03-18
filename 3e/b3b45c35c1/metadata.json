@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "3eb3b45c35c1",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "lang/en/auth.php",
+    "lang/en/pagination.php",
+    "lang/en/passwords.php",
+    "lang/en/validation.php",
+    "lang/es.json",
+    "lang/es/auth.php",
+    "lang/es/pagination.php",
+    "lang/es/passwords.php",
+    "lang/es/validation.php",
+    "resources/js/components/password-input.tsx",
+    "resources/js/pages/auth/login.tsx",
+    "resources/js/pages/normativa/campanas/index.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3e/b3b45c35c1/0/metadata.json",
+      "transcript": "/3e/b3b45c35c1/0/full.jsonl",
+      "context": "/3e/b3b45c35c1/0/context.md",
+      "content_hash": "/3e/b3b45c35c1/0/content_hash.txt",
+      "prompt": "/3e/b3b45c35c1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 38,
+    "cache_creation_tokens": 32939,
+    "cache_read_tokens": 1114947,
+    "output_tokens": 10244,
+    "api_call_count": 32
+  }
+}
