@@ -23,6 +23,7 @@ class BirthRegistrationController extends Controller
 
         return Inertia::render('nacimientos/crear', [
             'exploitation' => $exploitation,
+            'success' => $request->session()->get('success'),
         ]);
     }
 

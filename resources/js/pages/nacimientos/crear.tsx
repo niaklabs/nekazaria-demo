@@ -1,4 +1,4 @@
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { Baby, Check, CheckCircle, ChevronLeft, ChevronRight, Camera, Pencil, AlertTriangle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
@@ -30,8 +30,16 @@ interface Exploitation {
     sub_exploitations: SubExploitation[];
 }
 
+interface SuccessData {
+    message: string;
+    reference_code: string;
+    calves: Array<{ name: string | null; sex: string; crotal: string }>;
+    new_capacity: number;
+}
+
 interface Props {
     exploitation: Exploitation;
+    success?: SuccessData | null;
 }
 
 interface CalfData {
@@ -373,11 +381,9 @@ function Step6({ referenceCode, calves, newCapacity, maxCapacity }: { referenceC
     );
 }
 
-export default function CrearNacimiento({ exploitation }: Props) {
-    const { flash } = usePage().props;
-
+export default function CrearNacimiento({ exploitation, success }: Props) {
     const [step, setStep] = useState(() => {
-        if (flash?.success?.reference_code) return 5;
+        if (success?.reference_code) return 5;
         return 0;
     });
     const [subExploitation, setSubExploitation] = useState<SubExploitation | null>(null);
@@ -386,11 +392,11 @@ export default function CrearNacimiento({ exploitation }: Props) {
     const [calves, setCalves] = useState<CalfData[]>([]);
     const [submitting, setSubmitting] = useState(false);
     const [result, setResult] = useState<{ reference_code: string; calves: Array<{ name: string | null; sex: string; crotal: string }>; new_capacity: number; max_capacity: number } | null>(() => {
-        if (flash?.success?.reference_code) {
+        if (success?.reference_code) {
             return {
-                reference_code: flash.success.reference_code,
-                calves: flash.success.calves || [],
-                new_capacity: flash.success.new_capacity || 0,
+                reference_code: success.reference_code,
+                calves: success.calves || [],
+                new_capacity: success.new_capacity || 0,
                 max_capacity: 0,
             };
         }
@@ -432,12 +438,12 @@ export default function CrearNacimiento({ exploitation }: Props) {
             })),
         }, {
             onSuccess: (page) => {
-                const flashData = (page.props as any).flash?.success;
-                if (flashData) {
+                const successData = (page.props as any).success;
+                if (successData) {
                     setResult({
-                        reference_code: flashData.reference_code,
-                        calves: flashData.calves || [],
-                        new_capacity: flashData.new_capacity || 0,
+                        reference_code: successData.reference_code,
+                        calves: successData.calves || [],
+                        new_capacity: successData.new_capacity || 0,
                         max_capacity: subExploitation.max_capacity,
                     });
                     setStep(5);
