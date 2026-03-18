@@ -10,11 +10,14 @@ use App\Models\SanitaryCampaign;
 use App\Models\SubExploitation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * Idempotent — safe to run multiple times in production.
      */
     public function run(): void
     {
@@ -25,44 +28,48 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            User::factory()->create($user);
+            User::firstOrCreate(
+                ['email' => $user['email']],
+                ['name' => $user['name'], 'password' => Hash::make('password')],
+            );
         }
 
         $demoUser = User::where('email', 'demo@nekazaria.eus')->first();
 
-        $exploitation = Exploitation::create([
-            'user_id' => $demoUser->id,
-            'rega_code' => 'ES048012300001',
-            'name' => 'Baserri Etxeberri',
-        ]);
+        $exploitation = Exploitation::firstOrCreate(
+            ['rega_code' => 'ES048012300001'],
+            ['user_id' => $demoUser->id, 'name' => 'Baserri Etxeberri'],
+        );
 
-        $bovine = SubExploitation::create([
-            'exploitation_id' => $exploitation->id,
-            'species' => 'bovine',
-            'exploitation_type' => 'Producción de leche',
-            'zootechnical_classification' => 'Producción',
-            'productive_system' => 'Extensivo',
-            'current_capacity' => 10,
-            'max_capacity' => 50,
-            'sustainability' => 'Integrado',
-            'self_consumption' => false,
-            'census_date' => '2026-01-15',
-            'status' => 'active',
-        ]);
+        $bovine = SubExploitation::firstOrCreate(
+            ['exploitation_id' => $exploitation->id, 'species' => 'bovine'],
+            [
+                'exploitation_type' => 'Producción de leche',
+                'zootechnical_classification' => 'Producción',
+                'productive_system' => 'Extensivo',
+                'current_capacity' => 10,
+                'max_capacity' => 50,
+                'sustainability' => 'Integrado',
+                'self_consumption' => false,
+                'census_date' => '2026-01-15',
+                'status' => 'active',
+            ],
+        );
 
-        $ovine = SubExploitation::create([
-            'exploitation_id' => $exploitation->id,
-            'species' => 'ovine',
-            'exploitation_type' => 'Producción de carne',
-            'zootechnical_classification' => 'Producción',
-            'productive_system' => 'Mixto',
-            'current_capacity' => 8,
-            'max_capacity' => 30,
-            'sustainability' => null,
-            'self_consumption' => true,
-            'census_date' => '2026-01-15',
-            'status' => 'active',
-        ]);
+        $ovine = SubExploitation::firstOrCreate(
+            ['exploitation_id' => $exploitation->id, 'species' => 'ovine'],
+            [
+                'exploitation_type' => 'Producción de carne',
+                'zootechnical_classification' => 'Producción',
+                'productive_system' => 'Mixto',
+                'current_capacity' => 8,
+                'max_capacity' => 30,
+                'sustainability' => null,
+                'self_consumption' => true,
+                'census_date' => '2026-01-15',
+                'status' => 'active',
+            ],
+        );
 
         $this->seedBovineAnimals($bovine);
         $this->seedOvineAnimals($ovine);
@@ -81,13 +88,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($females as $data) {
-            Animal::create([
-                'sub_exploitation_id' => $sub->id,
-                'species' => 'bovine',
-                'sex' => 'female',
-                'status' => 'active',
-                ...$data,
-            ]);
+            Animal::firstOrCreate(
+                ['crotal_code' => $data['crotal_code']],
+                ['sub_exploitation_id' => $sub->id, 'species' => 'bovine', 'sex' => 'female', 'status' => 'active', ...$data],
+            );
         }
 
         $males = [
@@ -98,13 +102,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($males as $data) {
-            Animal::create([
-                'sub_exploitation_id' => $sub->id,
-                'species' => 'bovine',
-                'sex' => 'male',
-                'status' => 'active',
-                ...$data,
-            ]);
+            Animal::firstOrCreate(
+                ['crotal_code' => $data['crotal_code']],
+                ['sub_exploitation_id' => $sub->id, 'species' => 'bovine', 'sex' => 'male', 'status' => 'active', ...$data],
+            );
         }
     }
 
@@ -119,13 +120,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($females as $data) {
-            Animal::create([
-                'sub_exploitation_id' => $sub->id,
-                'species' => 'ovine',
-                'sex' => 'female',
-                'status' => 'active',
-                ...$data,
-            ]);
+            Animal::firstOrCreate(
+                ['crotal_code' => $data['crotal_code']],
+                ['sub_exploitation_id' => $sub->id, 'species' => 'ovine', 'sex' => 'female', 'status' => 'active', ...$data],
+            );
         }
 
         $males = [
@@ -135,49 +133,50 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($males as $data) {
-            Animal::create([
-                'sub_exploitation_id' => $sub->id,
-                'species' => 'ovine',
-                'sex' => 'male',
-                'status' => 'active',
-                ...$data,
-            ]);
+            Animal::firstOrCreate(
+                ['crotal_code' => $data['crotal_code']],
+                ['sub_exploitation_id' => $sub->id, 'species' => 'ovine', 'sex' => 'male', 'status' => 'active', ...$data],
+            );
         }
     }
 
     private function seedRegulations(Exploitation $exploitation): void
     {
-        $campaign = SanitaryCampaign::create([
-            'exploitation_id' => $exploitation->id,
-            'name' => 'BVD 2026',
-            'status' => 'in_progress',
-            'start_date' => '2026-01-15',
-            'end_date' => '2026-06-10',
-            'total_animals' => 12,
-            'sampled_animals' => 7,
-        ]);
-
-        $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
-            $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
-        })->limit(12)->get();
-
-        $statuses = array_merge(
-            array_fill(0, 7, 'sampled'),
-            array_fill(0, 3, 'pending'),
-            array_fill(0, 2, 'immobilized'),
+        $campaign = SanitaryCampaign::firstOrCreate(
+            ['exploitation_id' => $exploitation->id, 'name' => 'BVD 2026'],
+            [
+                'status' => 'in_progress',
+                'start_date' => '2026-01-15',
+                'end_date' => '2026-06-10',
+                'total_animals' => 12,
+                'sampled_animals' => 7,
+            ],
         );
 
-        foreach ($bovineAnimals->take(12) as $index => $animal) {
-            $status = $statuses[$index] ?? 'pending';
+        if ($campaign->wasRecentlyCreated) {
+            $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
+                $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
+            })->limit(12)->get();
 
-            CampaignAnimal::create([
-                'sanitary_campaign_id' => $campaign->id,
-                'animal_id' => $animal->id,
-                'status' => $status,
-                'immobilization_reason' => $status === 'immobilized'
-                    ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
-                    : null,
-            ]);
+            $statuses = array_merge(
+                array_fill(0, 7, 'sampled'),
+                array_fill(0, 3, 'pending'),
+                array_fill(0, 2, 'immobilized'),
+            );
+
+            foreach ($bovineAnimals->take(12) as $index => $animal) {
+                $status = $statuses[$index] ?? 'pending';
+
+                CampaignAnimal::firstOrCreate(
+                    ['sanitary_campaign_id' => $campaign->id, 'animal_id' => $animal->id],
+                    [
+                        'status' => $status,
+                        'immobilization_reason' => $status === 'immobilized'
+                            ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
+                            : null,
+                    ],
+                );
+            }
         }
 
         $regulations = [
@@ -189,8 +188,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Ver cómo resolverlo',
                 'action_url' => '/normativa/campanas/'.$campaign->id,
                 'due_date' => '2026-06-10',
-                'metadata' => ['campaign_id' => $campaign->id],
-                'created_at' => now()->subHours(2),
             ],
             [
                 'type' => 'sanitary_campaign',
@@ -200,8 +197,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Ver animales pendientes',
                 'action_url' => '/normativa/campanas/'.$campaign->id,
                 'due_date' => '2026-06-10',
-                'metadata' => ['campaign_id' => $campaign->id],
-                'created_at' => now()->subDay(),
             ],
             [
                 'type' => 'birth_deadline',
@@ -209,9 +204,8 @@ class DatabaseSeeder extends Seeder
                 'title' => '3 nacimientos pendientes de comunicar',
                 'description' => 'Tienes 3 nacimientos pendientes de comunicar antes del 25/03. El plazo legal es de 7 días desde el nacimiento.',
                 'action_label' => 'Comunicar nacimiento',
-                'action_url' => '/scanner',
+                'action_url' => '/nacimientos/crear',
                 'due_date' => '2026-03-25',
-                'created_at' => now()->subDays(2),
             ],
             [
                 'type' => 'movement_pending',
@@ -221,7 +215,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Ver estado',
                 'action_url' => '#',
                 'due_date' => null,
-                'created_at' => now()->subDays(3),
             ],
             [
                 'type' => 'subsidy_open',
@@ -231,7 +224,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Ver detalles',
                 'action_url' => '#',
                 'due_date' => '2026-04-30',
-                'created_at' => now()->subDays(5),
             ],
             [
                 'type' => 'census_reminder',
@@ -241,7 +233,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Declarar censo',
                 'action_url' => '#',
                 'due_date' => '2026-03-31',
-                'created_at' => now()->subDays(7),
             ],
             [
                 'type' => 'document_expiring',
@@ -251,7 +242,6 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Solicitar renovación',
                 'action_url' => '#',
                 'due_date' => '2026-04-15',
-                'created_at' => now()->subDays(4),
             ],
             [
                 'type' => 'capacity_warning',
@@ -261,17 +251,14 @@ class DatabaseSeeder extends Seeder
                 'action_label' => 'Ver subexplotación',
                 'action_url' => '#',
                 'due_date' => null,
-                'created_at' => now()->subDays(6),
             ],
         ];
 
         foreach ($regulations as $data) {
-            Regulation::create([
-                'exploitation_id' => $exploitation->id,
-                'is_read' => false,
-                'is_resolved' => false,
-                ...$data,
-            ]);
+            Regulation::firstOrCreate(
+                ['exploitation_id' => $exploitation->id, 'title' => $data['title']],
+                ['is_read' => false, 'is_resolved' => false, ...$data],
+            );
         }
     }
 }
