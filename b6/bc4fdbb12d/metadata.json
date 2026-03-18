@@ -1,0 +1,57 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "b6bc4fdbb12d",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "app/Http/Middleware/HandleInertiaRequests.php",
+    "app/Models/Animal.php",
+    "app/Models/Exploitation.php",
+    "app/Models/SubExploitation.php",
+    "app/Models/User.php",
+    "database/factories/AnimalFactory.php",
+    "database/factories/ExploitationFactory.php",
+    "database/factories/SubExploitationFactory.php",
+    "database/migrations/2026_03_18_003557_create_animals_table.php",
+    "database/migrations/2026_03_18_003557_create_exploitations_table.php",
+    "database/migrations/2026_03_18_003557_create_sub_exploitations_table.php",
+    "database/migrations/2026_03_18_003558_create_sub_exploitations_table.php",
+    "database/migrations/2026_03_18_003559_create_animals_table.php",
+    "database/seeders/DatabaseSeeder.php",
+    "docs/specs/00-design-guidelines.md",
+    "docs/specs/01-wizard-comunicar-nacimiento.md",
+    "docs/specs/02-krotal-scanner.md",
+    "docs/specs/03-regulations-screen.md",
+    "docs/specs/04-ai-chatbot.md",
+    "docs/specs/05-boilerplate-cleanup-and-theming.md",
+    "lang/es.json",
+    "public/manifest.json",
+    "resources/css/app.css",
+    "resources/js/components/app-logo.tsx",
+    "resources/js/components/app-sidebar.tsx",
+    "resources/js/components/nav-main.tsx",
+    "resources/js/hooks/use-translation.ts",
+    "resources/js/pages/dashboard.tsx",
+    "resources/js/types/global.d.ts",
+    "resources/views/app.blade.php",
+    "routes/settings.php",
+    "routes/web.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b6/bc4fdbb12d/0/metadata.json",
+      "transcript": "/b6/bc4fdbb12d/0/full.jsonl",
+      "context": "/b6/bc4fdbb12d/0/context.md",
+      "content_hash": "/b6/bc4fdbb12d/0/content_hash.txt",
+      "prompt": "/b6/bc4fdbb12d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 147,
+    "cache_creation_tokens": 47032,
+    "cache_read_tokens": 13230025,
+    "output_tokens": 23497,
+    "api_call_count": 71
+  }
+}
