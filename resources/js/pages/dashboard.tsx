@@ -98,6 +98,7 @@ export default function Dashboard() {
                             {filteredSubs.map((sub) => (
                                 <SubExploitationCard
                                     key={sub.id}
+                                    id={sub.id}
                                     species={sub.species}
                                     exploitationType={sub.exploitation_type}
                                     zootechnicalClassification={sub.zootechnical_classification}

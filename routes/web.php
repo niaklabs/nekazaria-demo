@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KrotalScannerController;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\SanitaryCampaignController;
+use App\Http\Controllers\SubExploitationController;
 use App\Models\Regulation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('nacimientos/crear', [BirthRegistrationController::class, 'create'])->name('nacimientos.create');
     Route::post('nacimientos', [BirthRegistrationController::class, 'store'])->name('nacimientos.store');
+
+    Route::get('subexplotaciones/{subExploitation}', [SubExploitationController::class, 'show'])->name('subexplotaciones.show');
 
     Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
     Route::post('chat/messages', [ChatController::class, 'store'])->name('chat.store');
