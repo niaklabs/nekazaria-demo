@@ -50,5 +50,20 @@
     "common.next": "Siguiente",
     "common.cancel": "Cancelar",
     "common.save": "Guardar",
-    "common.search": "Buscar"
+    "common.search": "Buscar",
+
+    "login.title": "Iniciá sesión en tu cuenta",
+    "login.description": "Ingresá tu email y contraseña para acceder",
+    "login.head_title": "Iniciar sesión",
+    "login.email": "Correo electrónico",
+    "login.password": "Contraseña",
+    "login.password_placeholder": "Contraseña",
+    "login.forgot_password": "¿Olvidaste tu contraseña?",
+    "login.remember_me": "Recordarme",
+    "login.submit": "Iniciar sesión",
+    "login.no_account": "¿No tenés cuenta?",
+    "login.sign_up": "Registrate",
+
+    "password_input.show": "Mostrar contraseña",
+    "password_input.hide": "Ocultar contraseña"
 }
