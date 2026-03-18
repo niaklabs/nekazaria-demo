@@ -1,0 +1,20 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+using the pencil design
+
+Node ID: 4cSKB
+
+can modify the home screen to look like that, mocking and adding a side bar or something to react current protected routes
+
+should appears when the user login ins to the app.
+
+ask me every thing u need to achieve a good plan, when the plan are ready to be executed, also create the doc in the docs folder of this project and also in anytype
+
+### Prompt 2
+
+i prefer iterate about what i see when finish the plan, define by yourself, in the more useful way for agronomics producers, and after that, i have a call with stakeholders and we refine all those things
+

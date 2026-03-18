@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "8c971f38b400",
+  "session_id": "b93c94b4-d6d5-4234-a2f4-b539de460461",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T16:35:44.525632Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/plan-dashboard-redesign.md"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "7440d584-e008-4a9a-ae94-2a6f24f9fcf1",
+  "token_usage": {
+    "input_tokens": 26,
+    "cache_creation_tokens": 48141,
+    "cache_read_tokens": 414104,
+    "output_tokens": 7035,
+    "api_call_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T16:35:44.49401Z",
+    "agent_lines": 0,
+    "human_added": 4,
+    "human_modified": 145,
+    "human_removed": 0,
+    "total_committed": 149,
+    "agent_percentage": 0
+  }
+}
