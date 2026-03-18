@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "882de5b4204b",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/SubExploitationController.php",
+    "resources/js/components/sub-exploitation-card.tsx",
+    "resources/js/pages/dashboard.tsx",
+    "resources/js/pages/subexplotaciones/show.tsx",
+    "routes/web.php",
+    "tests/Feature/SubExploitationShowTest.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/88/2de5b4204b/0/metadata.json",
+      "transcript": "/88/2de5b4204b/0/full.jsonl",
+      "context": "/88/2de5b4204b/0/context.md",
+      "content_hash": "/88/2de5b4204b/0/content_hash.txt",
+      "prompt": "/88/2de5b4204b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 76,
+    "cache_creation_tokens": 56809,
+    "cache_read_tokens": 1622920,
+    "output_tokens": 10453,
+    "api_call_count": 35
+  }
+}

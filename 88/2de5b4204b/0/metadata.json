@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "882de5b4204b",
+  "session_id": "315b6baf-9c91-4f18-96bd-35ed7f683429",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T22:00:32.434747Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/SubExploitationController.php",
+    "resources/js/components/sub-exploitation-card.tsx",
+    "resources/js/pages/dashboard.tsx",
+    "resources/js/pages/subexplotaciones/show.tsx",
+    "routes/web.php",
+    "tests/Feature/SubExploitationShowTest.php"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "552cacd0-fc3b-4425-be45-13879444fc8f",
+  "token_usage": {
+    "input_tokens": 76,
+    "cache_creation_tokens": 56809,
+    "cache_read_tokens": 1622920,
+    "output_tokens": 10453,
+    "api_call_count": 35
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T22:00:32.39369Z",
+    "agent_lines": 309,
+    "human_added": 31,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 340,
+    "agent_percentage": 90.88235294117646
+  }
+}
