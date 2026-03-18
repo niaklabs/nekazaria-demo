@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use Database\Factories\RegulationFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Regulation extends Model
 {
+    /** @use HasFactory<RegulationFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'exploitation_id',
         'type',

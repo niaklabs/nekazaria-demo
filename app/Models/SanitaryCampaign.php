@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use Database\Factories\SanitaryCampaignFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SanitaryCampaign extends Model
 {
+    /** @use HasFactory<SanitaryCampaignFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'exploitation_id',
         'name',

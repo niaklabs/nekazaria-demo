@@ -83,20 +83,13 @@ function AlertCard({ regulation }: { regulation: Regulation }) {
     const config = severityConfig[regulation.severity];
     const Icon = config.icon;
 
-    const markRead = () => {
-        if (!regulation.is_read) {
-            router.patch(`/api/regulations/${regulation.id}/read`, {}, { preserveScroll: true });
-        }
-    };
-
     const markResolved = () => {
-        router.patch(`/api/regulations/${regulation.id}/resolve`, {}, { preserveScroll: true });
+        router.post(`/api/regulations/${regulation.id}/resolve`, {}, { preserveScroll: true });
     };
 
     return (
         <div
             className={`border-2 border-black border-l-4 ${config.borderColor} ${!regulation.is_read ? 'bg-[#FAFAFA]' : 'bg-white'} w-full`}
-            onClick={markRead}
         >
             <div className="flex flex-col gap-3 p-4">
                 <div className="flex items-center justify-between">
@@ -122,15 +115,15 @@ function AlertCard({ regulation }: { regulation: Regulation }) {
                     {regulation.action_url && regulation.action_label && (
                         <Link
                             href={regulation.action_url}
-                            className="inline-flex items-center gap-1 bg-[#E53935] px-3 py-2 text-xs font-bold text-white"
+                            className="inline-flex items-center gap-1 bg-[#E53935] px-3 min-h-[44px] text-xs font-bold text-white md:min-h-0 md:py-2"
                         >
                             {regulation.action_label}
                         </Link>
                     )}
                     {!regulation.is_resolved && (
                         <button
-                            onClick={(e) => { e.stopPropagation(); markResolved(); }}
-                            className="inline-flex items-center gap-1 border-2 border-black px-3 py-2 text-xs font-semibold"
+                            onClick={markResolved}
+                            className="inline-flex items-center gap-1 border-2 border-black px-3 min-h-[44px] text-xs font-semibold md:min-h-0 md:py-2"
                         >
                             <CheckCircle2 className="size-3" />
                             Resolver
@@ -192,7 +185,7 @@ export default function NormativaIndex({ regulations }: Props) {
                         <button
                             key={f.key}
                             onClick={() => setFilter(f.key)}
-                            className={`flex-1 py-2 text-xs font-bold ${filter === f.key ? 'bg-black text-white' : 'bg-white text-black'}`}
+                            className={`flex-1 min-h-[44px] text-xs font-bold md:min-h-0 md:py-2 ${filter === f.key ? 'bg-black text-white' : 'bg-white text-black'}`}
                         >
                             {f.label}
                         </button>

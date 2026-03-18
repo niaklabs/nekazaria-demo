@@ -1,8 +1,39 @@
-import { Head, Link, usePage } from '@inertiajs/react';
-import { Baby, Bell, Camera, MessageCircle } from 'lucide-react';
+import { Head, usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import { ExploitationCard } from '@/components/exploitation-card';
+import { NotificationBell } from '@/components/notification-bell';
+import { SpeciesFilter } from '@/components/species-filter';
+import { SubExploitationCard } from '@/components/sub-exploitation-card';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import type { BreadcrumbItem, SharedData } from '@/types';
+import type { BreadcrumbItem } from '@/types';
+
+type SubExploitation = {
+    id: number;
+    species: string;
+    exploitation_type: string;
+    zootechnical_classification: string;
+    productive_system: string;
+    current_capacity: number;
+    max_capacity: number;
+    sustainability: string | null;
+    self_consumption: boolean;
+    animals_count: number;
+};
+
+type Exploitation = {
+    id: number;
+    rega_code: string;
+    name: string;
+    municipality: string | null;
+    province: string | null;
+    sub_exploitations: SubExploitation[];
+};
+
+type DashboardProps = {
+    exploitation: Exploitation | null;
+    unreadRegulationsCount: number;
+};
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,71 +42,82 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const quickActions = [
-    {
-        title: 'Comunicar Nacimiento',
-        description: 'Registrar el nacimiento de un nuevo animal',
-        href: '/nacimientos/crear',
-        icon: Baby,
-    },
-    {
-        title: 'Escanear Crotal',
-        description: 'Identificar un animal con la cámara',
-        href: '/scanner',
-        icon: Camera,
-    },
-    {
-        title: 'Normativa',
-        description: 'Alertas y plazos pendientes',
-        href: '/normativa',
-        icon: Bell,
-    },
-    {
-        title: 'NekazarIA Chat',
-        description: 'Pregunta lo que necesites',
-        href: '/chat',
-        icon: MessageCircle,
-    },
-];
-
 export default function Dashboard() {
-    const { auth } = usePage<SharedData>().props;
-    const firstName = auth.user.name.split(' ')[0];
+    const { exploitation, unreadRegulationsCount } = usePage<{ exploitation: Exploitation | null; unreadRegulationsCount: number }>().props;
+    const [activeSpecies, setActiveSpecies] = useState<string | null>(null);
 
-    const now = new Date();
-    const dateString = now.toLocaleDateString('es-ES', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
+    const subExploitations = exploitation?.sub_exploitations ?? [];
+    const availableSpecies = [...new Set(subExploitations.map((s) => s.species))];
+    const filteredSubs = activeSpecies
+        ? subExploitations.filter((s) => s.species === activeSpecies)
+        : subExploitations;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Mi Explotación" />
             <div className="flex flex-col gap-6 p-6">
-                <div>
-                    <h1 className="text-2xl font-bold">Hola, {firstName}!</h1>
-                    <p className="text-sm font-medium text-muted-foreground capitalize">{dateString}</p>
+                {/* Header */}
+                <div className="flex items-start justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold">Mi Explotación</h1>
+                        {exploitation?.province && (
+                            <p className="text-sm font-medium text-muted-foreground">{exploitation.province}</p>
+                        )}
+                    </div>
+                    <NotificationBell count={unreadRegulationsCount} />
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {quickActions.map((action) => (
-                        <Link
-                            key={action.href}
-                            href={action.href}
-                            className="flex items-start gap-4 border-2 border-black p-4 transition-colors hover:bg-secondary"
-                        >
-                            <div className="flex size-10 shrink-0 items-center justify-center bg-primary text-primary-foreground">
-                                <action.icon className="size-5" />
+                {exploitation ? (
+                    <>
+                        {/* REGA Card */}
+                        <ExploitationCard
+                            regaCode={exploitation.rega_code}
+                            municipality={exploitation.municipality}
+                            province={exploitation.province}
+                        />
+
+                        {/* Species Filter */}
+                        {availableSpecies.length > 1 && (
+                            <div className="flex flex-col gap-2">
+                                <span className="text-xs font-semibold tracking-widest text-neutral-500">
+                                    FILTRAR POR ESPECIE
+                                </span>
+                                <SpeciesFilter
+                                    species={availableSpecies}
+                                    activeSpecies={activeSpecies}
+                                    onSelect={setActiveSpecies}
+                                />
                             </div>
-                            <div>
-                                <p className="text-sm font-bold">{action.title}</p>
-                                <p className="text-xs text-muted-foreground">{action.description}</p>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                        )}
+
+                        {/* Subexploitations */}
+                        <div className="flex flex-col gap-4">
+                            <span className="text-xs font-semibold tracking-widest text-neutral-500">
+                                SUBEXPLOTACIONES
+                            </span>
+                            {filteredSubs.map((sub) => (
+                                <SubExploitationCard
+                                    key={sub.id}
+                                    species={sub.species}
+                                    exploitationType={sub.exploitation_type}
+                                    zootechnicalClassification={sub.zootechnical_classification}
+                                    productiveSystem={sub.productive_system}
+                                    currentCapacity={sub.current_capacity}
+                                    maxCapacity={sub.max_capacity}
+                                    sustainability={sub.sustainability}
+                                    selfConsumption={sub.self_consumption}
+                                    animalsCount={sub.animals_count}
+                                />
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <div className="rounded-lg border-2 border-dashed border-neutral-300 p-8 text-center">
+                        <p className="text-sm text-muted-foreground">
+                            No tienes ninguna explotación registrada.
+                        </p>
+                    </div>
+                )}
             </div>
         </AppLayout>
     );

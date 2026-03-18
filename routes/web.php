@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BirthRegistrationController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KrotalScannerController;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\SanitaryCampaignController;
@@ -12,23 +13,23 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/dashboard')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('scanner', [KrotalScannerController::class, 'index'])->name('scanner.index');
 
     Route::get('normativa', [RegulationController::class, 'index'])->name('normativa.index');
     Route::get('normativa/campanas/{sanitaryCampaign}', [SanitaryCampaignController::class, 'show'])->name('normativa.campanas.show');
 
-    Route::patch('api/regulations/{regulation}/read', function (Request $request, Regulation $regulation) {
+    Route::post('api/regulations/{regulation}/read', function (Request $request, Regulation $regulation) {
         $regulation->update(['is_read' => true]);
 
-        return response()->json(['success' => true]);
+        return redirect()->route('normativa.index');
     })->name('api.regulations.read');
 
-    Route::patch('api/regulations/{regulation}/resolve', function (Request $request, Regulation $regulation) {
+    Route::post('api/regulations/{regulation}/resolve', function (Request $request, Regulation $regulation) {
         $regulation->update(['is_resolved' => true]);
 
-        return response()->json(['success' => true]);
+        return redirect()->route('normativa.index');
     })->name('api.regulations.resolve');
 
     Route::get('nacimientos/crear', [BirthRegistrationController::class, 'create'])->name('nacimientos.create');

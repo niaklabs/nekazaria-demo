@@ -38,38 +38,53 @@ class DatabaseSeeder extends Seeder
 
         $exploitation = Exploitation::firstOrCreate(
             ['rega_code' => 'ES048012300001'],
-            ['user_id' => $demoUser->id, 'name' => 'Baserri Etxeberri'],
+            [
+                'user_id' => $demoUser->id,
+                'name' => 'Baserri Etxeberri',
+                'municipality' => 'Bilbao',
+                'province' => 'Bizkaia',
+            ],
         );
+
+        $exploitation->update(['municipality' => 'Bilbao', 'province' => 'Bizkaia']);
+
+        $bovineData = [
+            'exploitation_type' => 'Producción de leche',
+            'zootechnical_classification' => 'Producción',
+            'productive_system' => 'Extensivo',
+            'current_capacity' => 45,
+            'max_capacity' => 50,
+            'sustainability' => 'Ecológico',
+            'self_consumption' => false,
+            'census_date' => '2026-01-15',
+            'status' => 'active',
+        ];
 
         $bovine = SubExploitation::firstOrCreate(
             ['exploitation_id' => $exploitation->id, 'species' => 'bovine'],
-            [
-                'exploitation_type' => 'Producción de leche',
-                'zootechnical_classification' => 'Producción',
-                'productive_system' => 'Extensivo',
-                'current_capacity' => 10,
-                'max_capacity' => 50,
-                'sustainability' => 'Integrado',
-                'self_consumption' => false,
-                'census_date' => '2026-01-15',
-                'status' => 'active',
-            ],
+            $bovineData,
         );
+
+        $bovine->update($bovineData);
+
+        $ovineData = [
+            'exploitation_type' => 'Producción de carne',
+            'zootechnical_classification' => 'Reproducción',
+            'productive_system' => 'Extensivo',
+            'current_capacity' => 120,
+            'max_capacity' => 200,
+            'sustainability' => 'Integrado',
+            'self_consumption' => false,
+            'census_date' => '2026-01-15',
+            'status' => 'active',
+        ];
 
         $ovine = SubExploitation::firstOrCreate(
             ['exploitation_id' => $exploitation->id, 'species' => 'ovine'],
-            [
-                'exploitation_type' => 'Producción de carne',
-                'zootechnical_classification' => 'Producción',
-                'productive_system' => 'Mixto',
-                'current_capacity' => 8,
-                'max_capacity' => 30,
-                'sustainability' => null,
-                'self_consumption' => true,
-                'census_date' => '2026-01-15',
-                'status' => 'active',
-            ],
+            $ovineData,
         );
+
+        $ovine->update($ovineData);
 
         $this->seedBovineAnimals($bovine);
         $this->seedOvineAnimals($ovine);
@@ -99,6 +114,8 @@ class DatabaseSeeder extends Seeder
             ['crotal_code' => 'ES0480123000108', 'breed' => 'Asturiana', 'name' => null, 'birth_date' => '2021-07-20'],
             ['crotal_code' => 'ES0480123000109', 'breed' => 'Pirenaica', 'name' => 'Indartsu', 'birth_date' => '2022-08-10'],
             ['crotal_code' => 'ES0480123000110', 'breed' => 'Rubia Gallega', 'name' => null, 'birth_date' => '2023-05-03'],
+            ['crotal_code' => 'ES0480123000111', 'breed' => 'Pirenaica', 'name' => 'Basatxi', 'birth_date' => '2020-12-18'],
+            ['crotal_code' => 'ES0480123000112', 'breed' => 'Asturiana', 'name' => null, 'birth_date' => '2022-02-25'],
         ];
 
         foreach ($males as $data) {
@@ -153,30 +170,28 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        if ($campaign->wasRecentlyCreated) {
-            $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
-                $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
-            })->limit(12)->get();
+        $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
+            $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
+        })->limit(12)->get();
 
-            $statuses = array_merge(
-                array_fill(0, 7, 'sampled'),
-                array_fill(0, 3, 'pending'),
-                array_fill(0, 2, 'immobilized'),
+        $statuses = array_merge(
+            array_fill(0, 7, 'sampled'),
+            array_fill(0, 3, 'pending'),
+            array_fill(0, 2, 'immobilized'),
+        );
+
+        foreach ($bovineAnimals->take(12) as $index => $animal) {
+            $status = $statuses[$index] ?? 'pending';
+
+            CampaignAnimal::firstOrCreate(
+                ['sanitary_campaign_id' => $campaign->id, 'animal_id' => $animal->id],
+                [
+                    'status' => $status,
+                    'immobilization_reason' => $status === 'immobilized'
+                        ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
+                        : null,
+                ],
             );
-
-            foreach ($bovineAnimals->take(12) as $index => $animal) {
-                $status = $statuses[$index] ?? 'pending';
-
-                CampaignAnimal::firstOrCreate(
-                    ['sanitary_campaign_id' => $campaign->id, 'animal_id' => $animal->id],
-                    [
-                        'status' => $status,
-                        'immobilization_reason' => $status === 'immobilized'
-                            ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
-                            : null,
-                    ],
-                );
-            }
         }
 
         $regulations = [
