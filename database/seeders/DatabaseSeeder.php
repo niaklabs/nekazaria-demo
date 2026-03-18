@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Animal;
+use App\Models\CampaignAnimal;
 use App\Models\Exploitation;
+use App\Models\Regulation;
+use App\Models\SanitaryCampaign;
 use App\Models\SubExploitation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -63,6 +66,7 @@ class DatabaseSeeder extends Seeder
 
         $this->seedBovineAnimals($bovine);
         $this->seedOvineAnimals($ovine);
+        $this->seedRegulations($exploitation);
     }
 
     private function seedBovineAnimals(SubExploitation $sub): void
@@ -136,6 +140,136 @@ class DatabaseSeeder extends Seeder
                 'species' => 'ovine',
                 'sex' => 'male',
                 'status' => 'active',
+                ...$data,
+            ]);
+        }
+    }
+
+    private function seedRegulations(Exploitation $exploitation): void
+    {
+        $campaign = SanitaryCampaign::create([
+            'exploitation_id' => $exploitation->id,
+            'name' => 'BVD 2026',
+            'status' => 'in_progress',
+            'start_date' => '2026-01-15',
+            'end_date' => '2026-06-10',
+            'total_animals' => 12,
+            'sampled_animals' => 7,
+        ]);
+
+        $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
+            $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
+        })->limit(12)->get();
+
+        $statuses = array_merge(
+            array_fill(0, 7, 'sampled'),
+            array_fill(0, 3, 'pending'),
+            array_fill(0, 2, 'immobilized'),
+        );
+
+        foreach ($bovineAnimals->take(12) as $index => $animal) {
+            $status = $statuses[$index] ?? 'pending';
+
+            CampaignAnimal::create([
+                'sanitary_campaign_id' => $campaign->id,
+                'animal_id' => $animal->id,
+                'status' => $status,
+                'immobilization_reason' => $status === 'immobilized'
+                    ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
+                    : null,
+            ]);
+        }
+
+        $regulations = [
+            [
+                'type' => 'animal_immobilized',
+                'severity' => 'urgent',
+                'title' => '2 animales inmovilizados — BVD 2026',
+                'description' => 'Tienes 2 animales bloqueados por la campaña sanitaria BVD. Para desbloquearlos debes completar el muestreo.',
+                'action_label' => 'Ver cómo resolverlo',
+                'action_url' => '/normativa/campanas/'.$campaign->id,
+                'due_date' => '2026-06-10',
+                'metadata' => ['campaign_id' => $campaign->id],
+                'created_at' => now()->subHours(2),
+            ],
+            [
+                'type' => 'sanitary_campaign',
+                'severity' => 'warning',
+                'title' => 'Campaña BVD 2026: 5 animales pendientes',
+                'description' => 'La campaña BVD 2026 termina el 10/06. Te quedan 5 animales pendientes de muestreo.',
+                'action_label' => 'Ver animales pendientes',
+                'action_url' => '/normativa/campanas/'.$campaign->id,
+                'due_date' => '2026-06-10',
+                'metadata' => ['campaign_id' => $campaign->id],
+                'created_at' => now()->subDay(),
+            ],
+            [
+                'type' => 'birth_deadline',
+                'severity' => 'warning',
+                'title' => '3 nacimientos pendientes de comunicar',
+                'description' => 'Tienes 3 nacimientos pendientes de comunicar antes del 25/03. El plazo legal es de 7 días desde el nacimiento.',
+                'action_label' => 'Comunicar nacimiento',
+                'action_url' => '/scanner',
+                'due_date' => '2026-03-25',
+                'created_at' => now()->subDays(2),
+            ],
+            [
+                'type' => 'movement_pending',
+                'severity' => 'warning',
+                'title' => 'Guía de movimiento pendiente de validación',
+                'description' => 'La guía de movimiento GM-2026-048-00198 está pendiente de validación por parte de la administración.',
+                'action_label' => 'Ver estado',
+                'action_url' => '#',
+                'due_date' => null,
+                'created_at' => now()->subDays(3),
+            ],
+            [
+                'type' => 'subsidy_open',
+                'severity' => 'info',
+                'title' => 'Convocatoria: Ayudas ganadería ecológica 2026',
+                'description' => 'Convocatoria abierta: Ayudas a la ganadería ecológica 2026. Plazo de solicitud hasta el 30/04.',
+                'action_label' => 'Ver detalles',
+                'action_url' => '#',
+                'due_date' => '2026-04-30',
+                'created_at' => now()->subDays(5),
+            ],
+            [
+                'type' => 'census_reminder',
+                'severity' => 'info',
+                'title' => 'Declaración de censo anual pendiente',
+                'description' => 'Declaración de censo anual pendiente para subexplotación avícola. Plazo hasta el 31/03.',
+                'action_label' => 'Declarar censo',
+                'action_url' => '#',
+                'due_date' => '2026-03-31',
+                'created_at' => now()->subDays(7),
+            ],
+            [
+                'type' => 'document_expiring',
+                'severity' => 'warning',
+                'title' => 'Libro de establo caduca el 15/04/2026',
+                'description' => 'Tu libro de establo caduca el 15/04/2026. Solicita la renovación con antelación para evitar problemas.',
+                'action_label' => 'Solicitar renovación',
+                'action_url' => '#',
+                'due_date' => '2026-04-15',
+                'created_at' => now()->subDays(4),
+            ],
+            [
+                'type' => 'capacity_warning',
+                'severity' => 'info',
+                'title' => 'Subexplotación bovina al 90% de capacidad',
+                'description' => 'La subexplotación bovina está al 90% de capacidad (45/50). Revisa si necesitas ampliar o tramitar bajas.',
+                'action_label' => 'Ver subexplotación',
+                'action_url' => '#',
+                'due_date' => null,
+                'created_at' => now()->subDays(6),
+            ],
+        ];
+
+        foreach ($regulations as $data) {
+            Regulation::create([
+                'exploitation_id' => $exploitation->id,
+                'is_read' => false,
+                'is_resolved' => false,
                 ...$data,
             ]);
         }
