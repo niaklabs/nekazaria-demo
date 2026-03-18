@@ -3,28 +3,45 @@
   "checkpoint_id": "8c971f38b400",
   "session_id": "b93c94b4-d6d5-4234-a2f4-b539de460461",
   "strategy": "manual-commit",
-  "created_at": "2026-03-18T16:35:44.525632Z",
+  "created_at": "2026-03-18T16:54:26.234445Z",
   "branch": "develop",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
-    "docs/plan-dashboard-redesign.md"
+    "app/Http/Controllers/DashboardController.php",
+    "app/Models/Exploitation.php",
+    "database/migrations/2026_03_18_163734_add_location_to_exploitations_table.php",
+    "database/seeders/DatabaseSeeder.php",
+    "resources/js/components/exploitation-card.tsx",
+    "resources/js/components/notification-bell.tsx",
+    "resources/js/components/species-filter.tsx",
+    "resources/js/components/sub-exploitation-card.tsx",
+    "resources/js/pages/dashboard.tsx",
+    "routes/web.php",
+    "step1-sub.png",
+    "step1.png",
+    "step2-madre.png",
+    "tests/Feature/DashboardTest.php",
+    "wizard-s2-madre.png",
+    "wizard-step2.png"
   ],
   "agent": "Claude Code",
-  "transcript_identifier_at_start": "7440d584-e008-4a9a-ae94-2a6f24f9fcf1",
+  "transcript_identifier_at_start": "c4a237a2-ef81-46f0-9b63-4631465532fd",
+  "checkpoint_transcript_start": 199,
+  "transcript_lines_at_start": 199,
   "token_usage": {
-    "input_tokens": 26,
-    "cache_creation_tokens": 48141,
-    "cache_read_tokens": 414104,
-    "output_tokens": 7035,
-    "api_call_count": 12
+    "input_tokens": 922,
+    "cache_creation_tokens": 74100,
+    "cache_read_tokens": 9139345,
+    "output_tokens": 19352,
+    "api_call_count": 93
   },
   "initial_attribution": {
-    "calculated_at": "2026-03-18T16:35:44.49401Z",
-    "agent_lines": 0,
-    "human_added": 4,
-    "human_modified": 145,
+    "calculated_at": "2026-03-18T16:54:26.121505Z",
+    "agent_lines": 521,
+    "human_added": 3568,
+    "human_modified": 4,
     "human_removed": 0,
-    "total_committed": 149,
-    "agent_percentage": 0
+    "total_committed": 4093,
+    "agent_percentage": 12.72904959687271
   }
 }
