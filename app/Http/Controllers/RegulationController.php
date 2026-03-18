@@ -11,13 +11,15 @@ class RegulationController extends Controller
 {
     public function index(Request $request): Response
     {
-        $exploitation = $request->user()->exploitations()->firstOrFail();
+        $exploitation = $request->user()->exploitations()->first();
 
-        $regulations = Regulation::query()
-            ->where('exploitation_id', $exploitation->id)
-            ->orderByRaw("CASE severity WHEN 'urgent' THEN 1 WHEN 'warning' THEN 2 WHEN 'info' THEN 3 ELSE 4 END")
-            ->latest()
-            ->get();
+        $regulations = $exploitation
+            ? Regulation::query()
+                ->where('exploitation_id', $exploitation->id)
+                ->orderByRaw("CASE severity WHEN 'urgent' THEN 1 WHEN 'warning' THEN 2 WHEN 'info' THEN 3 ELSE 4 END")
+                ->latest()
+                ->get()
+            : collect();
 
         $grouped = $regulations->groupBy('severity');
 
