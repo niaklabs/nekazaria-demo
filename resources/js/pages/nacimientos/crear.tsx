@@ -1,6 +1,6 @@
-import { Head, router } from '@inertiajs/react';
-import { Baby, Check, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
-import { useState } from 'react';
+import { Head, router, usePage } from '@inertiajs/react';
+import { Baby, Check, CheckCircle, ChevronLeft, ChevronRight, Camera, Pencil, AlertTriangle } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
@@ -112,13 +112,22 @@ function Step2({ animals, selectedId, onSelect }: { animals: Animal[]; selectedI
         <div className="flex flex-col gap-4">
             <h2 className="text-2xl font-bold">Seleccionar madre</h2>
             <p className="text-sm leading-[1.4] text-[#757575]">Selecciona la hembra que es madre del animal nacido.</p>
-            <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar por crotal o nombre..."
-                className="h-[52px] w-full bg-[#F5F5F5] px-[18px] text-sm"
-            />
+            <div className="flex gap-2">
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Buscar por crotal o nombre..."
+                    className="h-[52px] flex-1 bg-[#F5F5F5] px-[18px] text-sm"
+                />
+                <button
+                    onClick={() => router.visit('/scanner?returnTo=/nacimientos/crear')}
+                    className="flex size-[52px] shrink-0 items-center justify-center border-2 border-black"
+                    title="Escanear crotal"
+                >
+                    <Camera className="size-5" />
+                </button>
+            </div>
             <div className="flex flex-col gap-2">
                 {filtered.map((a) => {
                     const age = Math.floor((Date.now() - new Date(a.birth_date).getTime()) / (365.25 * 24 * 60 * 60 * 1000));
@@ -228,30 +237,50 @@ function Step4({ motherBreed, calves, onUpdate }: { motherBreed: string; calves:
     );
 }
 
-function Step5({ sub, mother, father, calves, animals }: { sub: SubExploitation; mother: number; father: number | null; calves: CalfData[]; animals: Animal[] }) {
+function Step5({ sub, mother, father, calves, animals, onEditStep }: { sub: SubExploitation; mother: number; father: number | null; calves: CalfData[]; animals: Animal[]; onEditStep: (step: number) => void }) {
     const motherAnimal = animals.find((a) => a.id === mother);
     const fatherAnimal = father ? animals.find((a) => a.id === father) : null;
+    const oldestCalfDaysAgo = Math.max(...calves.map((c) => Math.floor((Date.now() - new Date(c.birth_date).getTime()) / (1000 * 60 * 60 * 24))));
+    const withinLegalDeadline = oldestCalfDaysAgo <= 7;
 
     return (
         <div className="flex flex-col gap-4">
             <h2 className="text-2xl font-bold">Resumen</h2>
             <div className="flex flex-col gap-3 border-2 border-black p-4">
-                <div>
-                    <p className="text-xs text-[#757575]">Subexplotación</p>
-                    <p className="text-sm font-bold">{speciesLabels[sub.species]} · {sub.exploitation_type}</p>
+                <div className="flex items-start justify-between">
+                    <div>
+                        <p className="text-xs text-[#757575]">Subexplotación</p>
+                        <p className="text-sm font-bold">{speciesLabels[sub.species]} · {sub.exploitation_type}</p>
+                    </div>
+                    <button onClick={() => onEditStep(0)} className="flex items-center gap-1 text-xs font-semibold text-[#E53935]">
+                        <Pencil className="size-3" /> Editar
+                    </button>
                 </div>
-                <div>
-                    <p className="text-xs text-[#757575]">Madre</p>
-                    <p className="text-sm font-bold">{motherAnimal?.crotal_code} {motherAnimal?.name ? `(${motherAnimal.name})` : ''}</p>
+                <div className="flex items-start justify-between">
+                    <div>
+                        <p className="text-xs text-[#757575]">Madre</p>
+                        <p className="text-sm font-bold">{motherAnimal?.crotal_code} {motherAnimal?.name ? `(${motherAnimal.name})` : ''}</p>
+                    </div>
+                    <button onClick={() => onEditStep(1)} className="flex items-center gap-1 text-xs font-semibold text-[#E53935]">
+                        <Pencil className="size-3" /> Editar
+                    </button>
                 </div>
-                {fatherAnimal && (
+                <div className="flex items-start justify-between">
                     <div>
                         <p className="text-xs text-[#757575]">Padre</p>
-                        <p className="text-sm font-bold">{fatherAnimal.crotal_code} {fatherAnimal.name ? `(${fatherAnimal.name})` : ''}</p>
+                        <p className="text-sm font-bold">{fatherAnimal ? `${fatherAnimal.crotal_code} ${fatherAnimal.name ? `(${fatherAnimal.name})` : ''}` : 'No indicado'}</p>
                     </div>
-                )}
+                    <button onClick={() => onEditStep(2)} className="flex items-center gap-1 text-xs font-semibold text-[#E53935]">
+                        <Pencil className="size-3" /> Editar
+                    </button>
+                </div>
                 <div className="mt-2 border-t-2 border-black pt-3">
-                    <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Crías ({calves.length})</p>
+                    <div className="flex items-start justify-between">
+                        <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Crías ({calves.length})</p>
+                        <button onClick={() => onEditStep(3)} className="flex items-center gap-1 text-xs font-semibold text-[#E53935]">
+                            <Pencil className="size-3" /> Editar
+                        </button>
+                    </div>
                     {calves.map((c, i) => (
                         <div key={i} className="mt-2 flex items-center justify-between text-sm">
                             <span>{c.sex === 'female' ? 'Hembra' : 'Macho'} · {c.breed}</span>
@@ -260,28 +289,76 @@ function Step5({ sub, mother, father, calves, animals }: { sub: SubExploitation;
                     ))}
                 </div>
             </div>
-            <div className="flex items-center gap-2 bg-[#E8F5E9] p-3">
-                <Check className="size-4 text-[#2E7D32]" />
-                <span className="text-xs font-semibold text-[#2E7D32]">Datos validados correctamente</span>
+
+            <div className="flex flex-col gap-2 border-2 border-black p-4">
+                <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Validación</p>
+                <div className="flex items-center gap-2">
+                    <CheckCircle className="size-4 text-[#2E7D32]" />
+                    <span className="text-xs text-[#2E7D32]">Madre activa en la explotación</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <CheckCircle className="size-4 text-[#2E7D32]" />
+                    <span className="text-xs text-[#2E7D32]">Capacidad disponible ({sub.current_capacity + calves.length}/{sub.max_capacity})</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    {withinLegalDeadline ? (
+                        <>
+                            <CheckCircle className="size-4 text-[#2E7D32]" />
+                            <span className="text-xs text-[#2E7D32]">Dentro del plazo legal (7 días)</span>
+                        </>
+                    ) : (
+                        <>
+                            <AlertTriangle className="size-4 text-[#E65100]" />
+                            <span className="text-xs text-[#E65100]">Fuera del plazo legal de 7 días</span>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
 
-function Step6({ referenceCode, assignedCrotals }: { referenceCode: string; assignedCrotals: string[] }) {
+function Step6({ referenceCode, calves, newCapacity, maxCapacity }: { referenceCode: string; calves: Array<{ name: string | null; sex: string; crotal: string }>; newCapacity: number; maxCapacity: number }) {
+    const [showCheck, setShowCheck] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowCheck(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className="flex flex-col items-center gap-5 py-8 text-center">
-            <div className="flex size-16 items-center justify-center bg-[#E8F5E9]">
-                <Baby className="size-8 text-[#2E7D32]" />
+            <div
+                className="flex size-16 items-center justify-center bg-[#E8F5E9] transition-all duration-500"
+                style={{ transform: showCheck ? 'scale(1)' : 'scale(0)', opacity: showCheck ? 1 : 0 }}
+            >
+                <CheckCircle className="size-8 text-[#2E7D32]" />
             </div>
             <h2 className="text-2xl font-bold">¡Nacimiento registrado!</h2>
             <p className="text-sm text-[#757575]">Referencia: <span className="font-bold text-black">{referenceCode}</span></p>
-            {assignedCrotals.length > 0 && (
+            {calves.length > 0 && (
                 <div className="w-full border-2 border-black p-4">
                     <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Crotales asignados</p>
-                    {assignedCrotals.map((c, i) => (
-                        <p key={i} className="mt-2 text-sm font-bold">{c}</p>
+                    {calves.map((c, i) => (
+                        <div key={i} className="mt-2 flex items-center justify-between">
+                            <span className="text-sm font-bold">{c.crotal}</span>
+                            <span className="text-xs text-[#757575]">{c.sex === 'female' ? 'Hembra' : 'Macho'}{c.name ? ` · ${c.name}` : ''}</span>
+                        </div>
                     ))}
+                </div>
+            )}
+            {newCapacity > 0 && maxCapacity > 0 && (
+                <div className="w-full border-2 border-black p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Capacidad actualizada</p>
+                    <div className="mt-2 flex items-center justify-between">
+                        <span className="text-sm font-bold">{newCapacity}/{maxCapacity}</span>
+                        <span className={`px-2 py-0.5 text-xs font-bold ${newCapacity >= maxCapacity ? 'bg-[#FFEBEE] text-[#E53935]' : 'bg-[#E8F5E9] text-[#2E7D32]'}`}>
+                            {maxCapacity - newCapacity} plazas libres
+                        </span>
+                    </div>
+                    <div className="mt-2 h-1.5 w-full bg-[#F5F5F5]">
+                        <div className={`h-1.5 ${newCapacity >= maxCapacity ? 'bg-[#E53935]' : 'bg-[#2E7D32]'}`} style={{ width: `${(newCapacity / maxCapacity) * 100}%` }} />
+                    </div>
                 </div>
             )}
             <div className="flex w-full flex-col gap-2">
@@ -297,13 +374,28 @@ function Step6({ referenceCode, assignedCrotals }: { referenceCode: string; assi
 }
 
 export default function CrearNacimiento({ exploitation }: Props) {
-    const [step, setStep] = useState(0);
+    const { flash } = usePage().props;
+
+    const [step, setStep] = useState(() => {
+        if (flash?.success?.reference_code) return 5;
+        return 0;
+    });
     const [subExploitation, setSubExploitation] = useState<SubExploitation | null>(null);
     const [motherId, setMotherId] = useState<number | null>(null);
     const [fatherId, setFatherId] = useState<number | null>(null);
     const [calves, setCalves] = useState<CalfData[]>([]);
     const [submitting, setSubmitting] = useState(false);
-    const [result, setResult] = useState<{ reference_code: string; assigned_crotals: string[] } | null>(null);
+    const [result, setResult] = useState<{ reference_code: string; calves: Array<{ name: string | null; sex: string; crotal: string }>; new_capacity: number; max_capacity: number } | null>(() => {
+        if (flash?.success?.reference_code) {
+            return {
+                reference_code: flash.success.reference_code,
+                calves: flash.success.calves || [],
+                new_capacity: flash.success.new_capacity || 0,
+                max_capacity: 0,
+            };
+        }
+        return null;
+    });
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -322,7 +414,7 @@ export default function CrearNacimiento({ exploitation }: Props) {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         if (!subExploitation || !motherId) return;
         setSubmitting(true);
 
@@ -339,13 +431,17 @@ export default function CrearNacimiento({ exploitation }: Props) {
                 birth_date: c.birth_date,
             })),
         }, {
-            onSuccess: (page: any) => {
-                const flash = page.props?.flash;
-                setResult({
-                    reference_code: flash?.reference_code || 'NC-2026-048-00001',
-                    assigned_crotals: flash?.assigned_crotals || [],
-                });
-                setStep(5);
+            onSuccess: (page) => {
+                const flashData = (page.props as any).flash?.success;
+                if (flashData) {
+                    setResult({
+                        reference_code: flashData.reference_code,
+                        calves: flashData.calves || [],
+                        new_capacity: flashData.new_capacity || 0,
+                        max_capacity: subExploitation.max_capacity,
+                    });
+                    setStep(5);
+                }
             },
             onError: () => setSubmitting(false),
         });
@@ -380,9 +476,9 @@ export default function CrearNacimiento({ exploitation }: Props) {
                     />
                 )}
                 {step === 4 && subExploitation && (
-                    <Step5 sub={subExploitation} mother={motherId!} father={fatherId} calves={calves} animals={subExploitation.animals} />
+                    <Step5 sub={subExploitation} mother={motherId!} father={fatherId} calves={calves} animals={subExploitation.animals} onEditStep={setStep} />
                 )}
-                {step === 5 && result && <Step6 referenceCode={result.reference_code} assignedCrotals={result.assigned_crotals} />}
+                {step === 5 && result && <Step6 referenceCode={result.reference_code} calves={result.calves} newCapacity={result.new_capacity} maxCapacity={result.max_capacity} />}
 
                 {step > 0 && step < 5 && (
                     <div className="flex gap-2">

@@ -8,6 +8,14 @@ declare module '@inertiajs/core' {
             sidebarOpen: boolean;
             locale: string;
             translations: Record<string, string>;
+            flash: {
+                success?: {
+                    message: string;
+                    reference_code: string;
+                    calves: Array<{ name: string | null; sex: string; crotal: string }>;
+                    new_capacity: number;
+                } | null;
+            };
             [key: string]: unknown;
         };
     }
