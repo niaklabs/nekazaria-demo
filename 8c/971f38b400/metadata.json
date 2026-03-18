@@ -3,7 +3,7 @@
   "checkpoint_id": "8c971f38b400",
   "strategy": "manual-commit",
   "branch": "develop",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "app/Http/Controllers/DashboardController.php",
     "app/Models/CampaignAnimal.php",
@@ -50,13 +50,20 @@
       "context": "/8c/971f38b400/2/context.md",
       "content_hash": "/8c/971f38b400/2/content_hash.txt",
       "prompt": "/8c/971f38b400/2/prompt.txt"
+    },
+    {
+      "metadata": "/8c/971f38b400/3/metadata.json",
+      "transcript": "/8c/971f38b400/3/full.jsonl",
+      "context": "/8c/971f38b400/3/context.md",
+      "content_hash": "/8c/971f38b400/3/content_hash.txt",
+      "prompt": "/8c/971f38b400/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 195,
-    "cache_creation_tokens": 214552,
-    "cache_read_tokens": 13185822,
-    "output_tokens": 41347,
-    "api_call_count": 150
+    "input_tokens": 204,
+    "cache_creation_tokens": 238556,
+    "cache_read_tokens": 13365022,
+    "output_tokens": 42531,
+    "api_call_count": 157
   }
 }
