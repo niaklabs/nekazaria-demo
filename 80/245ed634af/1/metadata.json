@@ -1,11 +1,12 @@
 {
   "cli_version": "0.4.2",
   "checkpoint_id": "80245ed634af",
+  "session_id": "f0269f2b-088f-45c1-9d85-eecbaba30409",
   "strategy": "manual-commit",
+  "created_at": "2026-03-18T01:06:38.410807Z",
   "branch": "develop",
-  "checkpoints_count": 3,
+  "checkpoints_count": 2,
   "files_touched": [
-    "app/Concerns/PasswordValidationRules.php",
     "app/Http/Controllers/BirthRegistrationController.php",
     "app/Http/Controllers/ChatController.php",
     "app/Http/Controllers/KrotalScannerController.php",
@@ -65,27 +66,24 @@
     "tests/Feature/ExampleTest.php",
     "tests/Feature/KrotalScannerTest.php"
   ],
-  "sessions": [
-    {
-      "metadata": "/80/245ed634af/0/metadata.json",
-      "transcript": "/80/245ed634af/0/full.jsonl",
-      "context": "/80/245ed634af/0/context.md",
-      "content_hash": "/80/245ed634af/0/content_hash.txt",
-      "prompt": "/80/245ed634af/0/prompt.txt"
-    },
-    {
-      "metadata": "/80/245ed634af/1/metadata.json",
-      "transcript": "/80/245ed634af/1/full.jsonl",
-      "context": "/80/245ed634af/1/context.md",
-      "content_hash": "/80/245ed634af/1/content_hash.txt",
-      "prompt": "/80/245ed634af/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "814f3745-e487-4123-8d93-d36854c64800",
+  "checkpoint_transcript_start": 750,
+  "transcript_lines_at_start": 750,
   "token_usage": {
-    "input_tokens": 63,
-    "cache_creation_tokens": 70365,
-    "cache_read_tokens": 10158567,
-    "output_tokens": 31093,
-    "api_call_count": 51
+    "input_tokens": 52,
+    "cache_creation_tokens": 50454,
+    "cache_read_tokens": 9947185,
+    "output_tokens": 29925,
+    "api_call_count": 42
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T01:06:38.249723Z",
+    "agent_lines": 2782,
+    "human_added": 46,
+    "human_modified": 91,
+    "human_removed": 0,
+    "total_committed": 2919,
+    "agent_percentage": 95.30661185337445
   }
 }
