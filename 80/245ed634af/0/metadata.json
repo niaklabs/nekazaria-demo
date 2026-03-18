@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "80245ed634af",
+  "session_id": "3695be80-8475-4f25-87a8-308af071bbef",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T01:04:49.263706Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Concerns/PasswordValidationRules.php"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "7717b459-2beb-4d3b-bfba-96c4eecb234d",
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 19911,
+    "cache_read_tokens": 211382,
+    "output_tokens": 1168,
+    "api_call_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T01:04:49.256784Z",
+    "agent_lines": 0,
+    "human_added": 2846,
+    "human_modified": 5,
+    "human_removed": 0,
+    "total_committed": 2847,
+    "agent_percentage": 0
+  }
+}
