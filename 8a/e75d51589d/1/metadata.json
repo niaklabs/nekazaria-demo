@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "8ae75d51589d",
+  "session_id": "f0269f2b-088f-45c1-9d85-eecbaba30409",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-18T00:12:20.594864Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/specs/01-wizard-comunicar-nacimiento.md",
+    "docs/specs/02-krotal-scanner.md",
+    "docs/specs/03-regulations-screen.md",
+    "docs/specs/04-ai-chatbot.md"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "f4efba6e-300f-4b4e-b2db-52f163499c71",
+  "token_usage": {
+    "input_tokens": 44,
+    "cache_creation_tokens": 115164,
+    "cache_read_tokens": 1793896,
+    "output_tokens": 23395,
+    "api_call_count": 24
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-18T00:12:20.549982Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 272,
+    "human_removed": 663,
+    "total_committed": 270,
+    "agent_percentage": 0
+  }
+}

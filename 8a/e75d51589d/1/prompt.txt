@@ -1,0 +1,53 @@
+using NekazarIA collection on anytype
+
+  i need:
+
+  1 - spike and create specific markdowns with functionality to achive a working demo (mocking a lot) to
+  achieve a usable demo to cover:
+
+  - one wizard demo (any)
+  - basic krotal scanner (could be dummy)
+  - a regulations screen (mocked)
+  - simple ai chatbot (mocked)
+
+  i need create for each one, functionality markdowns, to after that, work in those paralleling.
+
+  ask me every thing and try to first do the research and after that work on the documents
+
+---
+
+[Request interrupted by user]
+
+---
+
+using NekazarIA collection on anytype
+
+  i need:
+
+  1 - spike and create specific markdowns with functionality to achive a working demo (mocking a lot) to
+  achieve a usable demo to cover:
+
+  - one wizard demo (any)
+  - basic krotal scanner (could be dummy)
+  - a regulations screen (mocked)
+  - simple ai chatbot (mocked)
+
+  i need create for each one, functionality markdowns, to after that, work in those paralleling.
+
+  ask me every thing and try to first do the research and after that work on the documents
+
+---
+
+1 Comunicar nacimiento ,
+
+2 for the diputation
+
+3 spanish at this moment, but use i18n file to add more after
+
+4 english
+
+5 basic laravel models to have some persistency, but no too much.
+
+6 use a real camera (i think a pwa should have access to that, im working on that right now, to use pwa)
+
+7 in both, first on the repo, and when finish, add to the anytype colelction

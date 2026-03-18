@@ -3,12 +3,16 @@
   "checkpoint_id": "8ae75d51589d",
   "strategy": "manual-commit",
   "branch": "develop",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     ".claude/settings.local.json",
     ".env",
     "database/factories/UserFactory.php",
     "database/seeders/DatabaseSeeder.php",
+    "docs/specs/01-wizard-comunicar-nacimiento.md",
+    "docs/specs/02-krotal-scanner.md",
+    "docs/specs/03-regulations-screen.md",
+    "docs/specs/04-ai-chatbot.md",
     "public/icon-192x192.png",
     "public/icon-512x512.png",
     "public/manifest.json",
@@ -29,13 +33,20 @@
       "context": "",
       "content_hash": "/8a/e75d51589d/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/8a/e75d51589d/1/metadata.json",
+      "transcript": "/8a/e75d51589d/1/full.jsonl",
+      "context": "/8a/e75d51589d/1/context.md",
+      "content_hash": "/8a/e75d51589d/1/content_hash.txt",
+      "prompt": "/8a/e75d51589d/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 16,
-    "cache_creation_tokens": 31068,
-    "cache_read_tokens": 872612,
-    "output_tokens": 6460,
-    "api_call_count": 16
+    "input_tokens": 60,
+    "cache_creation_tokens": 146232,
+    "cache_read_tokens": 2666508,
+    "output_tokens": 29855,
+    "api_call_count": 40
   }
 }
