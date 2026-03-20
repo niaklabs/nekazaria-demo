@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { ArrowLeft, ChevronRight, ScanLine, Search } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { index as animalesIndex } from '@/actions/App/Http/Controllers/AnimalController';
+import { index as animalesIndex, show as animalShow } from '@/actions/App/Http/Controllers/AnimalController';
 import { show as subExploitationShow } from '@/actions/App/Http/Controllers/SubExploitationController';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
@@ -133,7 +133,10 @@ export default function AnimalesIndex({ subExploitation, animals, speciesLabel }
                     {filteredAnimals.map((animal, idx) => (
                         <div key={animal.id}>
                             {idx > 0 && <div className="h-[2px] bg-black" />}
-                            <div className="flex items-center gap-3 p-4">
+                            <Link
+                                href={animalShow.url({ subExploitation: subExploitation.id, animal: animal.id })}
+                                className="flex items-center gap-3 p-4"
+                            >
                                 <div className={`size-3 shrink-0 rounded-full ${statusColors[animal.status]}`} />
                                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                                     <span className="text-[15px] font-bold text-black">{animal.crotal_code}</span>
@@ -151,7 +154,7 @@ export default function AnimalesIndex({ subExploitation, animals, speciesLabel }
                                     </span>
                                 )}
                                 <ChevronRight className="size-5 shrink-0 text-[#757575]" />
-                            </div>
+                            </Link>
                         </div>
                     ))}
                     {filteredAnimals.length === 0 && (
