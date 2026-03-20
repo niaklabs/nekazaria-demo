@@ -1,5 +1,5 @@
 import { Head, router } from '@inertiajs/react';
-import { Baby, Check, CheckCircle, ChevronLeft, ChevronRight, Camera, Pencil, AlertTriangle } from 'lucide-react';
+import { Baby, Check, CheckCircle, ChevronDown, ChevronLeft, ChevronRight, Camera, Pencil, AlertTriangle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
@@ -160,6 +160,7 @@ function Step2({ animals, selectedId, onSelect }: { animals: Animal[]; selectedI
 
 function Step3({ animals, selectedId, onSelect, onSkip }: { animals: Animal[]; selectedId: number | null; onSelect: (id: number) => void; onSkip: () => void }) {
     const males = animals.filter((a) => a.sex === 'male');
+    const [showParents, setShowParents] = useState(false);
 
     return (
         <div className="flex flex-col gap-4">
@@ -168,7 +169,15 @@ function Step3({ animals, selectedId, onSelect, onSkip }: { animals: Animal[]; s
             <button onClick={onSkip} className="w-full border-2 border-black py-3 text-center text-sm font-semibold">
                 Omitir este paso
             </button>
-            {males.map((a) => (
+            {!showParents && (
+                <button
+                    onClick={() => setShowParents(true)}
+                    className="flex w-full items-center justify-center gap-2 border-2 border-black bg-[#F5F5F5] py-3 text-center text-sm font-semibold"
+                >
+                    Ver Padres <ChevronDown className="size-4" />
+                </button>
+            )}
+            {showParents && males.map((a) => (
                 <button
                     key={a.id}
                     onClick={() => onSelect(a.id)}
