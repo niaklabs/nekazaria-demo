@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "020e7e124195",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/HomeController.php",
+    "docs/crotal.jpeg",
+    "resources/js/pages/home.tsx",
+    "tests/Feature/HomeTest.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/02/0e7e124195/0/metadata.json",
+      "transcript": "/02/0e7e124195/0/full.jsonl",
+      "context": "/02/0e7e124195/0/context.md",
+      "content_hash": "/02/0e7e124195/0/content_hash.txt",
+      "prompt": "/02/0e7e124195/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 965,
+    "cache_creation_tokens": 47160,
+    "cache_read_tokens": 2293717,
+    "output_tokens": 7812,
+    "api_call_count": 48
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "020e7e124195",
+  "session_id": "319b115e-20a1-4a56-b190-393ea298c275",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T01:42:21.35732Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/HomeController.php",
+    "docs/crotal.jpeg",
+    "resources/js/pages/home.tsx",
+    "tests/Feature/HomeTest.php"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 965,
+    "cache_creation_tokens": 47160,
+    "cache_read_tokens": 2293717,
+    "output_tokens": 7812,
+    "api_call_count": 48
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T01:42:21.309331Z",
+    "agent_lines": 205,
+    "human_added": 176,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 381,
+    "agent_percentage": 53.805774278215225
+  }
+}
