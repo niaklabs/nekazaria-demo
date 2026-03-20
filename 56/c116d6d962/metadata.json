@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "56c116d6d962",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "resources/js/pages/nacimientos/crear.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/56/c116d6d962/0/metadata.json",
+      "transcript": "/56/c116d6d962/0/full.jsonl",
+      "context": "/56/c116d6d962/0/context.md",
+      "content_hash": "/56/c116d6d962/0/content_hash.txt",
+      "prompt": "/56/c116d6d962/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 16758,
+    "cache_read_tokens": 492856,
+    "output_tokens": 5539,
+    "api_call_count": 6
+  }
+}
