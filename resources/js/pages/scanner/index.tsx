@@ -131,7 +131,7 @@ function CameraView({
     onError,
 }: {
     onResult: (animal: AnimalResult) => void;
-    onError: () => void;
+    onError: (lastDetected?: string) => void;
 }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const srcCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -219,6 +219,7 @@ function CameraView({
     useEffect(() => {
         const startTime = Date.now();
         let active = true;
+        let lastRawText = '';
 
         const loop = async () => {
             while (active && scanningRef.current) {
@@ -233,7 +234,7 @@ function CameraView({
 
                 if (Date.now() - startTime > SCAN_TIMEOUT_MS) {
                     scanningRef.current = false;
-                    onErrorRef.current();
+                    onErrorRef.current(lastRawText);
 
                     return;
                 }
@@ -249,6 +250,10 @@ function CameraView({
                     return;
                 }
 
+                if (result.rawText) {
+                    lastRawText = result.rawText;
+                }
+
                 setDebugText(result.rawText || '(nada)');
 
                 if (result.code) {
@@ -257,7 +262,7 @@ function CameraView({
 
                     try {
                         const res = await fetch(
-                            `/api/animals/by-crotal/${encodeURIComponent(code)}`,
+                            `/api/animals/by-crotal/${encodeURIComponent(result.code)}`,
                         );
 
                         if (res.ok) {
@@ -270,7 +275,7 @@ function CameraView({
                         /* fall through */
                     }
 
-                    onErrorRef.current();
+                    onErrorRef.current(result.code);
                 } else {
                     setStatusText('Enfoca el crotal del animal');
                 }
@@ -446,11 +451,13 @@ function AnimalResultCard({
 function ErrorView({
     onRetry,
     onResult,
+    initialCode = '',
 }: {
     onRetry: () => void;
     onResult: (animal: AnimalResult) => void;
+    initialCode?: string;
 }) {
-    const [code, setCode] = useState('ES');
+    const [code, setCode] = useState(initialCode || 'ES');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -596,13 +603,20 @@ function PermissionDenied({ onManual }: { onManual: () => void }) {
 export default function ScannerIndex() {
     const [state, setState] = useState<ScannerState>('instructions');
     const [animal, setAnimal] = useState<AnimalResult | null>(null);
+    const [lastDetectedCode, setLastDetectedCode] = useState('');
 
     const handleResult = (a: AnimalResult) => {
         setAnimal(a);
         setState('result');
     };
 
-    const handleError = () => setState('error');
+    const handleError = (detected?: string) => {
+        if (detected) {
+            setLastDetectedCode(detected);
+        }
+
+        setState('error');
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -618,9 +632,9 @@ export default function ScannerIndex() {
                     <div className="relative min-h-[500px] flex-1">
                         <CameraView
                             onResult={handleResult}
-                            onError={() => {
+                            onError={(detected) => {
                                 if (state === 'camera') {
-                                    handleError();
+                                    handleError(detected);
                                 }
                             }}
                         />
@@ -639,6 +653,7 @@ export default function ScannerIndex() {
                     <ErrorView
                         onRetry={() => setState('camera')}
                         onResult={handleResult}
+                        initialCode={lastDetectedCode}
                     />
                 )}
                 {state === 'permission_denied' && (
