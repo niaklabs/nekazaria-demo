@@ -78,7 +78,7 @@ export default function Home() {
                         const Icon = card.icon;
                         const content = (
                             <div
-                                className={`flex flex-col gap-4 rounded-none border-2 border-black p-5 transition-colors ${
+                                className={`flex h-full flex-col gap-4 rounded-none border-2 border-black p-5 transition-colors ${
                                     card.disabled
                                         ? 'cursor-not-allowed border-neutral-300 bg-neutral-50 opacity-50'
                                         : 'bg-white hover:bg-neutral-50'
