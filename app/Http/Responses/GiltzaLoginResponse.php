@@ -17,10 +17,6 @@ class GiltzaLoginResponse implements LoginResponseContract
      */
     public function toResponse($request): JsonResponse|Response
     {
-        if ($request->wantsJson()) {
-            return new JsonResponse('', 204);
-        }
-
         return redirect()->intended(route('auth.giltza'));
     }
 }
