@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "a0e387f85ad8",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Middleware/HandleInertiaRequests.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a0/e387f85ad8/0/metadata.json",
+      "transcript": "/a0/e387f85ad8/0/full.jsonl",
+      "context": "/a0/e387f85ad8/0/context.md",
+      "content_hash": "/a0/e387f85ad8/0/content_hash.txt",
+      "prompt": "/a0/e387f85ad8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 32963,
+    "cache_read_tokens": 549893,
+    "output_tokens": 2669,
+    "api_call_count": 16
+  }
+}
