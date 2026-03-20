@@ -162,6 +162,7 @@ class DatabaseSeeder extends Seeder
         $campaign = SanitaryCampaign::firstOrCreate(
             ['exploitation_id' => $exploitation->id, 'name' => 'BVD 2026'],
             [
+                'species' => 'bovine',
                 'status' => 'in_progress',
                 'start_date' => '2026-01-15',
                 'end_date' => '2026-06-10',
@@ -169,6 +170,8 @@ class DatabaseSeeder extends Seeder
                 'sampled_animals' => 7,
             ],
         );
+
+        $campaign->update(['species' => 'bovine']);
 
         $bovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
             $query->where('exploitation_id', $exploitation->id)->where('species', 'bovine');
@@ -190,6 +193,66 @@ class DatabaseSeeder extends Seeder
                     'immobilization_reason' => $status === 'immobilized'
                         ? 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.'
                         : null,
+                    'restriction_type' => $status === 'immobilized' ? 'blocked' : null,
+                ],
+            );
+        }
+
+        // Update existing immobilized animals to have restriction_type
+        CampaignAnimal::where('sanitary_campaign_id', $campaign->id)
+            ->where('status', 'immobilized')
+            ->whereNull('restriction_type')
+            ->update(['restriction_type' => 'blocked']);
+
+        // Tuberculosis campaign — completed
+        $tbCampaign = SanitaryCampaign::firstOrCreate(
+            ['exploitation_id' => $exploitation->id, 'name' => 'Tuberculosis Bovina 2026'],
+            [
+                'species' => 'bovine',
+                'status' => 'completed',
+                'start_date' => '2025-10-01',
+                'end_date' => '2026-02-28',
+                'total_animals' => 12,
+                'sampled_animals' => 12,
+            ],
+        );
+
+        foreach ($bovineAnimals->take(12) as $animal) {
+            CampaignAnimal::firstOrCreate(
+                ['sanitary_campaign_id' => $tbCampaign->id, 'animal_id' => $animal->id],
+                ['status' => 'sampled'],
+            );
+        }
+
+        // Ovine immobilized animals with restriction_type: restricted
+        $ovineAnimals = Animal::whereHas('subExploitation', function ($query) use ($exploitation) {
+            $query->where('exploitation_id', $exploitation->id)->where('species', 'ovine');
+        })->limit(8)->get();
+
+        $ovineCampaign = SanitaryCampaign::firstOrCreate(
+            ['exploitation_id' => $exploitation->id, 'name' => 'Brucelosis Ovina 2026'],
+            [
+                'species' => 'ovine',
+                'status' => 'in_progress',
+                'start_date' => '2026-02-01',
+                'end_date' => '2026-07-15',
+                'total_animals' => $ovineAnimals->count(),
+                'sampled_animals' => max(0, $ovineAnimals->count() - 3),
+            ],
+        );
+
+        foreach ($ovineAnimals as $index => $animal) {
+            $isRestricted = $index >= $ovineAnimals->count() - 2;
+            $isPending = $index === $ovineAnimals->count() - 3;
+
+            CampaignAnimal::firstOrCreate(
+                ['sanitary_campaign_id' => $ovineCampaign->id, 'animal_id' => $animal->id],
+                [
+                    'status' => $isRestricted ? 'immobilized' : ($isPending ? 'pending' : 'sampled'),
+                    'immobilization_reason' => $isRestricted
+                        ? 'Sospecha de brucelosis. Restricción de movimiento hasta resultado definitivo.'
+                        : null,
+                    'restriction_type' => $isRestricted ? 'restricted' : null,
                 ],
             );
         }

@@ -27,11 +27,12 @@ class CampaignAnimalFactory extends Factory
         ];
     }
 
-    public function immobilized(): static
+    public function immobilized(string $restrictionType = 'blocked'): static
     {
         return $this->state(fn () => [
             'status' => 'immobilized',
             'immobilization_reason' => 'Resultado positivo en prueba serológica BVD. Requiere segunda muestra confirmatoria.',
+            'restriction_type' => $restrictionType,
         ]);
     }
 }

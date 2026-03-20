@@ -21,6 +21,7 @@ class SanitaryCampaignFactory extends Factory
         return [
             'exploitation_id' => Exploitation::factory(),
             'name' => 'BVD '.fake()->year(),
+            'species' => 'bovine',
             'status' => 'in_progress',
             'start_date' => fake()->dateTimeBetween('-3 months', 'now'),
             'end_date' => fake()->dateTimeBetween('+1 month', '+6 months'),

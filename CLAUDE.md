@@ -1,3 +1,9 @@
+<business-logic-guidelines>
+
+Always the crotal codes, rega codes, etc must be in uppercase. Always must start with ES48 + 10 digits.
+
+</business-logic-guidelines>
+
 <laravel-boost-guidelines>
 === foundation rules ===
 

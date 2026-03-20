@@ -29,14 +29,14 @@ test('lookup by crotal returns animal with sub exploitation', function () {
     $subExploitation = SubExploitation::factory()->create(['exploitation_id' => $exploitation->id]);
     $animal = Animal::factory()->create([
         'sub_exploitation_id' => $subExploitation->id,
-        'crotal_code' => 'ES0480123456789',
+        'crotal_code' => 'ES4800123456789',
     ]);
 
     $this->actingAs($user);
 
-    $response = $this->getJson(route('api.animals.by-crotal', ['code' => 'ES0480123456789']));
+    $response = $this->getJson(route('api.animals.by-crotal', ['code' => 'ES4800123456789']));
     $response->assertOk();
-    $response->assertJsonFragment(['crotal_code' => 'ES0480123456789']);
+    $response->assertJsonFragment(['crotal_code' => 'ES4800123456789']);
     $response->assertJsonPath('sub_exploitation.id', $subExploitation->id);
 });
 

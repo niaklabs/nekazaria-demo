@@ -17,6 +17,7 @@ class CampaignAnimal extends Model
         'animal_id',
         'status',
         'immobilization_reason',
+        'restriction_type',
     ];
 
     public function sanitaryCampaign(): BelongsTo

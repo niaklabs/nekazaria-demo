@@ -16,6 +16,7 @@ class SanitaryCampaign extends Model
     protected $fillable = [
         'exploitation_id',
         'name',
+        'species',
         'status',
         'start_date',
         'end_date',

@@ -19,6 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('scanner', [KrotalScannerController::class, 'index'])->name('scanner.index');
 
     Route::get('normativa', [RegulationController::class, 'index'])->name('normativa.index');
+    Route::get('normativa/campanas', [SanitaryCampaignController::class, 'index'])->name('normativa.campanas.index');
     Route::get('normativa/campanas/{sanitaryCampaign}', [SanitaryCampaignController::class, 'show'])->name('normativa.campanas.show');
 
     Route::post('api/regulations/{regulation}/read', function (Request $request, Regulation $regulation) {

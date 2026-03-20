@@ -25,7 +25,7 @@ test('dashboard shows exploitation data with subexploitations', function () {
     $user = User::factory()->create();
     $exploitation = Exploitation::factory()->create([
         'user_id' => $user->id,
-        'rega_code' => 'ES048099900001',
+        'rega_code' => 'ES480099900001',
         'municipality' => 'Bilbao',
         'province' => 'Bizkaia',
     ]);
@@ -40,13 +40,14 @@ test('dashboard shows exploitation data with subexploitations', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertSuccessful()
-        ->assertInertia(fn ($page) => $page
-            ->component('dashboard')
-            ->has('exploitation')
-            ->where('exploitation.rega_code', 'ES048099900001')
-            ->where('exploitation.municipality', 'Bilbao')
-            ->has('exploitation.sub_exploitations', 1)
-            ->has('unreadRegulationsCount')
+        ->assertInertia(
+            fn($page) => $page
+                ->component('dashboard')
+                ->has('exploitation')
+                ->where('exploitation.rega_code', 'ES480099900001')
+                ->where('exploitation.municipality', 'Bilbao')
+                ->has('exploitation.sub_exploitations', 1)
+                ->has('unreadRegulationsCount')
         );
 });
 
@@ -67,8 +68,9 @@ test('dashboard shows correct unread regulations count', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertSuccessful()
-        ->assertInertia(fn ($page) => $page
-            ->where('unreadRegulationsCount', 3)
+        ->assertInertia(
+            fn($page) => $page
+                ->where('unreadRegulationsCount', 3)
         );
 });
 
@@ -78,9 +80,10 @@ test('dashboard handles user without exploitation', function () {
     $this->actingAs($user)
         ->get(route('dashboard'))
         ->assertSuccessful()
-        ->assertInertia(fn ($page) => $page
-            ->component('dashboard')
-            ->where('exploitation', null)
-            ->where('unreadRegulationsCount', 0)
+        ->assertInertia(
+            fn($page) => $page
+                ->component('dashboard')
+                ->where('exploitation', null)
+                ->where('unreadRegulationsCount', 0)
         );
 });

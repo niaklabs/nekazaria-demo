@@ -1,5 +1,5 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { AlertTriangle, Bell, CheckCircle2, Info, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, Bell, CheckCircle2, ChevronRight, Info, ShieldAlert, Syringe } from 'lucide-react';
 import { useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
@@ -161,6 +161,22 @@ export default function NormativaIndex({ regulations }: Props) {
             <Head title="Normativa" />
             <div className="flex flex-col gap-5 p-6">
                 <h1 className="text-2xl font-bold">Mis Alertas y Normativa</h1>
+
+                <Link
+                    href="/normativa/campanas"
+                    className="flex items-center justify-between border-2 border-black bg-white p-4 active:bg-[#F5F5F5]"
+                >
+                    <div className="flex items-center gap-3">
+                        <div className="flex size-10 items-center justify-center bg-[#FFEBEE]">
+                            <Syringe className="size-5 text-[#E53935]" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-bold">Campañas Sanitarias</p>
+                            <p className="text-xs text-[#757575]">Ver estado de campañas y animales inmovilizados</p>
+                        </div>
+                    </div>
+                    <ChevronRight className="size-5 text-[#757575]" />
+                </Link>
 
                 <div className="flex items-center gap-3">
                     {urgentCount > 0 && (
