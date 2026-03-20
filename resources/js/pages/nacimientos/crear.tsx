@@ -335,24 +335,150 @@ function Step5({ sub, mother, father, calves, animals, onEditStep }: { sub: SubE
     );
 }
 
+const SIGNING_STEPS = [
+    'Conectando con Giltza...',
+    'Verificando identidad digital...',
+    'Firmando comunicación de nacimiento...',
+    'Registrando en el sistema...',
+];
+
 function Step6({ referenceCode, calves, newCapacity, maxCapacity }: { referenceCode: string; calves: Array<{ name: string | null; sex: string; crotal: string }>; newCapacity: number; maxCapacity: number }) {
-    const [showCheck, setShowCheck] = useState(false);
+    const [phase, setPhase] = useState<'signing' | 'success'>('signing');
+    const [signingStep, setSigningStep] = useState(0);
+    const [progress, setProgress] = useState(0);
+    const [signingDone, setSigningDone] = useState(false);
+    const [showContent, setShowContent] = useState(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setShowCheck(true), 100);
-        return () => clearTimeout(timer);
+        const stepInterval = setInterval(() => {
+            setSigningStep((prev) => {
+                if (prev < SIGNING_STEPS.length - 1) return prev + 1;
+                clearInterval(stepInterval);
+                return prev;
+            });
+        }, 800);
+        return () => clearInterval(stepInterval);
     }, []);
 
+    useEffect(() => {
+        const progressInterval = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) {
+                    clearInterval(progressInterval);
+                    return 100;
+                }
+                return prev + 1.2;
+            });
+        }, 30);
+        return () => clearInterval(progressInterval);
+    }, []);
+
+    useEffect(() => {
+        if (progress >= 100 && signingStep === SIGNING_STEPS.length - 1) {
+            const timeout = setTimeout(() => setSigningDone(true), 300);
+            return () => clearTimeout(timeout);
+        }
+    }, [progress, signingStep]);
+
+    useEffect(() => {
+        if (signingDone) {
+            const timeout = setTimeout(() => setPhase('success'), 800);
+            return () => clearTimeout(timeout);
+        }
+    }, [signingDone]);
+
+    useEffect(() => {
+        if (phase === 'success') {
+            const timeout = setTimeout(() => setShowContent(true), 400);
+            return () => clearTimeout(timeout);
+        }
+    }, [phase]);
+
+    if (phase === 'signing') {
+        return (
+            <div className="flex flex-col items-center gap-8 py-12 text-center">
+                {/* Shield / Check animation */}
+                <div className="relative flex items-center justify-center">
+                    <div
+                        className={`absolute size-28 rounded-full border-2 border-dashed transition-all duration-700 ${
+                            signingDone ? 'scale-110 border-[#2E7D32] opacity-0' : 'animate-[spin_8s_linear_infinite] border-[#E53935]/30'
+                        }`}
+                    />
+                    <div
+                        className={`absolute size-20 rounded-full border transition-all duration-500 ${
+                            signingDone ? 'scale-105 border-[#2E7D32] bg-[#E8F5E9]' : 'animate-[pulse_2s_ease-in-out_infinite] border-[#E53935]/20'
+                        }`}
+                    />
+                    <div
+                        className={`relative z-10 flex size-14 items-center justify-center rounded-full transition-all duration-500 ${
+                            signingDone ? 'scale-110 bg-[#2E7D32] text-white' : 'bg-[#E53935] text-white'
+                        }`}
+                    >
+                        {signingDone ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="size-7">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-7">
+                                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                                <path d="M12 8v4" />
+                                <path d="M12 16h.01" />
+                            </svg>
+                        )}
+                    </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-1">
+                    <h2 className="text-xl font-medium">
+                        {signingDone ? 'Comunicación firmada' : 'Firmando con Giltza'}
+                    </h2>
+                    <p className="text-sm text-[#757575]">
+                        {signingDone ? 'Registro completado correctamente' : 'Firma digital gubernamental'}
+                    </p>
+                </div>
+
+                <div className="w-full max-w-xs">
+                    <div className="h-1.5 w-full overflow-hidden bg-[#F5F5F5]">
+                        <div
+                            className={`h-1.5 transition-all duration-300 ease-out ${signingDone ? 'bg-[#2E7D32]' : 'bg-[#E53935]'}`}
+                            style={{ width: `${Math.min(progress, 100)}%` }}
+                        />
+                    </div>
+                    <div className="mt-3 flex items-center justify-center gap-2">
+                        {!signingDone && <div className="size-3 animate-spin rounded-full border-2 border-[#E53935] border-t-transparent" />}
+                        <p className="text-xs text-[#757575]">
+                            {signingDone ? 'Verificación completada' : SIGNING_STEPS[signingStep]}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-2 border border-[#E0E0E0] bg-[#F5F5F5] px-4 py-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4 text-[#757575]">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span className="text-xs text-[#757575]">Conexión segura · Gobierno Vasco</span>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="flex flex-col items-center gap-5 py-8 text-center">
-            <div
-                className="flex size-16 items-center justify-center bg-[#E8F5E9] transition-all duration-500"
-                style={{ transform: showCheck ? 'scale(1)' : 'scale(0)', opacity: showCheck ? 1 : 0 }}
-            >
+        <div
+            className="flex flex-col items-center gap-5 py-8 text-center transition-all duration-500"
+            style={{ opacity: showContent ? 1 : 0, transform: showContent ? 'translateY(0)' : 'translateY(12px)' }}
+        >
+            <div className="flex size-16 items-center justify-center bg-[#E8F5E9]">
                 <CheckCircle className="size-8 text-[#2E7D32]" />
             </div>
             <h2 className="text-2xl font-bold">¡Nacimiento registrado!</h2>
             <p className="text-sm text-[#757575]">Referencia: <span className="font-bold text-black">{referenceCode}</span></p>
+            <div className="flex items-center gap-2 bg-[#E8F5E9] px-3 py-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="size-4 text-[#2E7D32]">
+                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                </svg>
+                <span className="text-xs font-semibold text-[#2E7D32]">Firmado digitalmente con Giltza</span>
+            </div>
             {calves.length > 0 && (
                 <div className="w-full border-2 border-black p-4">
                     <p className="text-xs font-semibold uppercase tracking-[2px] text-[#757575]">Crotales asignados</p>
