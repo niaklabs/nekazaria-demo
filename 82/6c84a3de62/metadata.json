@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "826c84a3de62",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Responses/GiltzaLoginResponse.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/82/6c84a3de62/0/metadata.json",
+      "transcript": "/82/6c84a3de62/0/full.jsonl",
+      "context": "/82/6c84a3de62/0/context.md",
+      "content_hash": "/82/6c84a3de62/0/content_hash.txt",
+      "prompt": "/82/6c84a3de62/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 57,
+    "cache_creation_tokens": 24010,
+    "cache_read_tokens": 2854708,
+    "output_tokens": 6579,
+    "api_call_count": 44
+  }
+}
