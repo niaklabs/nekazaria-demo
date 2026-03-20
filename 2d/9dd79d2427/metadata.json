@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "2d9dd79d2427",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/SanitaryCampaignController.php",
+    "app/Models/CampaignAnimal.php",
+    "app/Models/SanitaryCampaign.php",
+    "database/factories/CampaignAnimalFactory.php",
+    "database/factories/SanitaryCampaignFactory.php",
+    "database/migrations/2026_03_18_220947_add_species_and_restriction_type_to_campaigns.php",
+    "database/seeders/DatabaseSeeder.php",
+    "resources/js/pages/normativa/campanas/index.tsx",
+    "resources/js/pages/normativa/index.tsx",
+    "routes/web.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2d/9dd79d2427/0/metadata.json",
+      "transcript": "/2d/9dd79d2427/0/full.jsonl",
+      "context": "/2d/9dd79d2427/0/context.md",
+      "content_hash": "/2d/9dd79d2427/0/content_hash.txt",
+      "prompt": "/2d/9dd79d2427/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 17,
+    "cache_creation_tokens": 48432,
+    "cache_read_tokens": 594612,
+    "output_tokens": 9025,
+    "api_call_count": 15
+  }
+}

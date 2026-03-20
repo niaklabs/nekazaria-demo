@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "2d9dd79d2427",
+  "session_id": "49a40276-d1f5-4fab-ac88-471e9c986287",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T00:58:31.157194Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/SanitaryCampaignController.php",
+    "app/Models/CampaignAnimal.php",
+    "app/Models/SanitaryCampaign.php",
+    "database/factories/CampaignAnimalFactory.php",
+    "database/factories/SanitaryCampaignFactory.php",
+    "database/migrations/2026_03_18_220947_add_species_and_restriction_type_to_campaigns.php",
+    "database/seeders/DatabaseSeeder.php",
+    "resources/js/pages/normativa/campanas/index.tsx",
+    "resources/js/pages/normativa/index.tsx",
+    "routes/web.php"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 17,
+    "cache_creation_tokens": 48432,
+    "cache_read_tokens": 594612,
+    "output_tokens": 9025,
+    "api_call_count": 15
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T00:58:31.128291Z",
+    "agent_lines": 349,
+    "human_added": 26,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 375,
+    "agent_percentage": 93.06666666666666
+  }
+}

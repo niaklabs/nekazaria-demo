@@ -1,0 +1,76 @@
+Implement the following plan:
+
+# Plan: Wire up Campañas Sanitarias index screen
+
+## Context
+The app has a campaign detail page (`/normativa/campanas/{id}`) but no **listing page** for all campaigns. The Pencil design (UMN9b) shows a screen that lists all campaigns with progress + a section for immobilized animals grouped by species/restriction type. This screen needs a link from the Normativa page.
+
+## Changes
+
+### 1. Migration: add `species` to `sanitary_campaigns` + `restriction_type` to `campaign_animals`
+- **File**: new migration
+- Add `string('species')->default('bovine')` to `sanitary_campaigns`
+- Add `string('restriction_type')->nullable()` to `campaign_animals` — values: `blocked` (bloqueado) or `restricted` (con restricción)
+- Update `SanitaryCampaign` model `$fillable` to include `species`
+- Update `CampaignAnimal` model `$fillable` to include `restriction_type`
+- Update `SanitaryCampaignFactory` to include `species`
+- Update `CampaignAnimalFactory` to include `restriction_type` in the `immobilized()` state
+
+### 2. Controller: add `index` method to `SanitaryCampaignController`
+- **File**: `app/Http/Controllers/SanitaryCampaignController.php`
+- Query all campaigns for the user's exploitation with eager-loaded `campaignAnimals.animal`
+- Collect all immobilized animals across campaigns, grouped by species + restriction_type
+- Render `normativa/campanas/index`
+
+### 3. Route: add campaigns index route
+- **File**: `routes/web.php`
+- `GET /normativa/campanas` → `SanitaryCampaignController@index` (named `normativa.campanas.index`)
+- Must be placed BEFORE the `{sanitaryCampaign}` show route to avoid conflict
+
+### 4. Frontend: create campaigns index page
+- **File**: `resources/js/pages/normativa/campanas/index.tsx` (new)
+- Match the design (UMN9b):
+  - Campaign cards with: name, species label (Bovino/Ovino), date range, status badge (En proceso red / Completa green), progress bar, pending count
+  - Click on a campaign card → links to `/normativa/campanas/{id}` (existing show page)
+  - "ANIMALES INMOVILIZADOS" section with:
+    - Red card: blocked animals (bloqueados) with count, reason, "Resolver bloqueo →" link to campaign
+    - Yellow card: restricted animals (con restricción) with count, reason, "Ver restricción →" link to campaign
+
+### 5. Link from Normativa page
+- **File**: `resources/js/pages/normativa/index.tsx`
+- Add a prominent link/button (e.g. "Ver Campañas Sanitarias") that navigates to `/normativa/campanas`
+
+### 6. Seed data: add Tuberculosis campaign + restriction types
+- **File**: `database/seeders/DatabaseSeeder.php`
+- Add `species` to existing BVD campaign seed (`bovine`)
+- Add `restriction_type` to existing immobilized campaign animals (`blocked`)
+- Add new "Tuberculosis Bovina 2026" campaign (status: `completed`, all animals sampled, no immobilized)
+- Add a few ovine immobilized animals with `restriction_type: restricted` across campaigns
+
+### 7. Run Pint + generate Wayfinder routes
+- `vendor/bin/pint --dirty --format agent`
+- `php artisan wayfinder:generate` (so the new route is available in TS)
+
+## Files to modify
+- `app/Http/Controllers/SanitaryCampaignController.php` — add `index()`
+- `app/Models/SanitaryCampaign.php` — add `species` to fillable
+- `app/Models/CampaignAnimal.php` — add `restriction_type` to fillable
+- `routes/web.php` — add index route
+- `resources/js/pages/normativa/index.tsx` — add link to campaigns
+- `resources/js/pages/normativa/campanas/index.tsx` — **new file**
+- `database/seeders/DatabaseSeeder.php` — expand campaign seeds
+- `database/factories/SanitaryCampaignFactory.php` — add species
+- `database/factories/CampaignAnimalFactory.php` — add restriction_type
+- New migration file
+
+## Verification
+1. `php artisan migrate` — new columns added
+2. `php artisan db:seed` — campaigns seeded with species + restriction types
+3. `npm run build` — frontend compiles
+4. Visit `/normativa` — see link to campaigns
+5. Click through to `/normativa/campanas` — see listing matching design
+6. Click a campaign → goes to existing show page
+7. `php artisan test --compact` — existing tests pass
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/gastongraciani/.REDACTED.jsonl
