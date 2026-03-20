@@ -10,10 +10,10 @@ class SanitaryCampaignController extends Controller
 {
     public function index(): Response
     {
-        $exploitation = auth()->user()->exploitation;
+        $exploitation = auth()->user()->exploitations()->first();
 
         $campaigns = SanitaryCampaign::query()
-            ->where('exploitation_id', $exploitation->id)
+            ->where('exploitation_id', $exploitation?->id)
             ->with('campaignAnimals.animal')
             ->get();
 
