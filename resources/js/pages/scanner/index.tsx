@@ -123,8 +123,8 @@ function ScanInstructions({
     );
 }
 
-const SCAN_INTERVAL_MS = 800;
-const SCAN_TIMEOUT_MS = 15000;
+const SCAN_INTERVAL_MS = 1000;
+const SCAN_TIMEOUT_MS = 20000;
 
 function CameraView({
     onResult,
@@ -134,11 +134,14 @@ function CameraView({
     onError: () => void;
 }) {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const srcCanvasRef = useRef<HTMLCanvasElement>(null);
+    const procCanvasRef = useRef<HTMLCanvasElement>(null);
     const streamRef = useRef<MediaStream | null>(null);
     const [torch, setTorch] = useState(false);
     const [hasTorch, setHasTorch] = useState(false);
     const [statusText, setStatusText] = useState('Enfoca el crotal del animal');
+    const [debugText, setDebugText] = useState('');
+    const [showDebug, setShowDebug] = useState(false);
     const { recognizeFrame, isProcessing, terminate } = useCrotalOcr();
     const scanningRef = useRef(true);
     const onErrorRef = useRef(onError);
@@ -155,8 +158,8 @@ function CameraView({
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: {
                         facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 },
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 },
                     },
                 });
 
@@ -219,7 +222,11 @@ function CameraView({
 
         const loop = async () => {
             while (active && scanningRef.current) {
-                if (!videoRef.current || !canvasRef.current) {
+                if (
+                    !videoRef.current ||
+                    !srcCanvasRef.current ||
+                    !procCanvasRef.current
+                ) {
                     await new Promise((r) => setTimeout(r, SCAN_INTERVAL_MS));
                     continue;
                 }
@@ -232,16 +239,19 @@ function CameraView({
                 }
 
                 setStatusText('Analizando...');
-                const code = await recognizeFrame(
+                const result = await recognizeFrame(
                     videoRef.current,
-                    canvasRef.current,
+                    srcCanvasRef.current,
+                    procCanvasRef.current,
                 );
 
                 if (!active || !scanningRef.current) {
                     return;
                 }
 
-                if (code) {
+                setDebugText(result.rawText || '(nada)');
+
+                if (result.code) {
                     scanningRef.current = false;
                     setStatusText('Crotal detectado, buscando animal...');
 
@@ -285,7 +295,17 @@ function CameraView({
                 muted
                 className="h-full w-full object-cover"
             />
-            <canvas ref={canvasRef} className="hidden" />
+            {/* Source canvas for full frame capture */}
+            <canvas ref={srcCanvasRef} className="hidden" />
+            {/* Processed canvas for binarized ROI — shown when debug is on */}
+            <canvas
+                ref={procCanvasRef}
+                className={
+                    showDebug
+                        ? 'absolute bottom-20 left-2 z-50 h-24 w-40 border border-green-400'
+                        : 'hidden'
+                }
+            />
 
             <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative h-48 w-72">
@@ -300,9 +320,20 @@ function CameraView({
                 <p className="text-sm font-medium text-white/90">
                     {statusText}
                 </p>
+                {showDebug && debugText && (
+                    <p className="mt-1 font-mono text-xs text-green-400">
+                        OCR: {debugText}
+                    </p>
+                )}
             </div>
 
             <div className="absolute inset-x-0 bottom-8 flex items-center justify-center gap-8">
+                <button
+                    onClick={() => setShowDebug((v) => !v)}
+                    className="flex size-12 items-center justify-center bg-white/20 text-xs text-white"
+                >
+                    DBG
+                </button>
                 {hasTorch && (
                     <button
                         onClick={toggleTorch}
