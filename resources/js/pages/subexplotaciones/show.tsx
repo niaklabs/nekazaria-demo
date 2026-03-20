@@ -109,18 +109,23 @@ function DetailRowWithSub({ label, value, sub }: { label: string; value: string;
 }
 
 function ActionButton({ icon: Icon, label, href }: { icon: React.ComponentType<{ className?: string }>; label: string; href?: string }) {
-    const content = (
-        <div className="flex flex-1 flex-col items-center gap-2 border-2 border-black p-4">
-            <Icon className="size-6 text-[#E53935]" />
-            <span className="text-center text-[13px] font-semibold">{label}</span>
-        </div>
-    );
-
     if (href) {
-        return <Link href={href} className="flex flex-1">{content}</Link>;
+        return (
+            <Link href={href} className="flex flex-1 flex-col items-center gap-2 border-2 border-black p-4">
+                <Icon className="size-6 text-[#E53935]" />
+                <span className="text-center text-[13px] font-semibold">{label}</span>
+            </Link>
+        );
     }
 
-    return <button className="flex flex-1 cursor-default opacity-50">{content}</button>;
+    return (
+        <button className="flex flex-1 cursor-default opacity-50">
+            <div className="flex flex-1 flex-col items-center gap-2 border-2 border-black p-4">
+                <Icon className="size-6 text-[#E53935]" />
+                <span className="text-center text-[13px] font-semibold">{label}</span>
+            </div>
+        </button>
+    );
 }
 
 export default function SubExploitationShow({ subExploitation, animalsCount, semaforo }: Props) {
