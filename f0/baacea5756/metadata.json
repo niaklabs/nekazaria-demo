@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "f0baacea5756",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Responses/GiltzaLoginResponse.php",
+    "resources/js/components/password-input.tsx",
+    "resources/js/pages/auth/login.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f0/baacea5756/0/metadata.json",
+      "transcript": "/f0/baacea5756/0/full.jsonl",
+      "context": "/f0/baacea5756/0/context.md",
+      "content_hash": "/f0/baacea5756/0/content_hash.txt",
+      "prompt": "/f0/baacea5756/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 8305,
+    "cache_read_tokens": 511813,
+    "output_tokens": 3392,
+    "api_call_count": 11
+  }
+}
