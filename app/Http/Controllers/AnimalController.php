@@ -35,8 +35,8 @@ class AnimalController extends Controller
             $hasAlert = $status === 'warning';
             $isImmobilized = $status === 'danger';
 
-            $movementType = fake()->randomElement($movementTypes);
-            $movementDate = fake()->dateTimeBetween('-1 year', 'now')->format('d/m/Y');
+            $movementType = $movementTypes[$animal->id % count($movementTypes)];
+            $movementDate = Carbon::now()->subDays(($animal->id * 37) % 365)->format('d/m/Y');
 
             $subtitle = $isImmobilized
                 ? 'Inmovilizado · Campaña BVD'
