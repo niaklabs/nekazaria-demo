@@ -1,0 +1,126 @@
+Implement the following plan:
+
+# Spike: Tesseract.js Real Crotal Scanner
+
+## Context
+
+The Krotal Scanner currently uses a **mocked OCR** — it waits 1-2 seconds, then fetches a random animal from the DB. We want to replace this with **real client-side OCR using Tesseract.js** to actually read crotal codes from the phone camera. This is a spike to validate if Tesseract.js can read embossed yellow ear tags in real conditions. Will be developed in an isolated worktree branch.
+
+## Approach
+
+Minimal Tesseract.js integration — replace the `simulateScan()` mock with real continuous frame capture + OCR recognition. No OpenCV pre-processing (keep minimal). Update the error screen to match the Pencil mockup.
+
+## Branch
+
+`spike/tesseract-crotal-scanner`
+
+## Steps
+
+### 1. Install Tesseract.js
+- `npm install tesseract.js`
+- No backend changes needed — this is 100% client-side
+
+### 2. Create OCR hook: `resources/js/hooks/use-crotal-ocr.ts`
+New custom hook that encapsulates the Tesseract logic:
+- Initialize Tesseract worker on mount (language: `eng`, whitelist: `REDACTED`)
+- `recognizeFrame(video: HTMLVideoElement)` — captures a frame from the video element onto a canvas, runs Tesseract recognition
+- Extracts text, searches for pattern `/ES\d{12}/i` in the recognized text
+- Also handles multi-line crotal format: detects `ES\d{2}` + `\d{5}` + `\d{5}` across lines and concatenates
+- Returns `{ code: string | null, confidence: number, isProcessing: boolean }`
+- Cleanup: terminate worker on unmount
+
+### 3. Modify `CameraView` component in `resources/js/pages/scanner/index.tsx`
+- Add a hidden `<canvas>` element for frame capture
+- Replace `simulateScan()` with a continuous scanning loop:
+  - Every ~800ms, capture current video frame to canvas
+  - Run OCR via the hook
+  - If a valid crotal code is found → call `/api/animals/by-crotal/{code}` to look up the animal
+  - If animal found → `onResult(animal)`
+  - If no code found after ~15 seconds (configurable timeout) → `onError()`
+- Add visual feedback: show "Analizando..." text during processing
+- Keep torch toggle as-is
+
+### 4. Update `ErrorView` to match Pencil mockup (node `n4V1n`)
+Current error screen is basic. Update to match the mockup:
+- Orange scan-eye icon in circular orange background (instead of CameraOff)
+- Title: "No pude leer el crotal"
+- Subtitle: "Intentá de nuevo o ingresá el número manualmente"
+- Red "Intentar de nuevo" button with refresh icon
+- Yellow tips card with lightbulb icon:
+  - "Limpiá el crotal con un trapo antes de escanear"
+  - "Acercá el móvil a 10-15 cm del crotal"
+  - "Buscá buena iluminación, evitá sombras sobre el crotal"
+  - "Mantené el móvil firme y esperá a que enfoque"
+- "o" divider
+- "INGRESAR MANUALMENTE" section with formatted input (ES prefix + code) and search button
+- Format hint: "Formato: ES + 4 dígitos provincia + 3 municipio + 6 individual"
+
+### 5. Crotal code normalization utility
+Small helper function (can live in the hook or a shared util):
+```
+normalizecrotalCode(raw: string): string | null
+- Strip all spaces, dashes, newlines
+- Uppercase
+- Match /^ES\d{12}$/
+- Return normalized code or null
+```
+
+## Files to modify/create
+
+| File | Action |
+|------|--------|
+| `package.json` | Add `tesseract.js` dependency |
+| `resources/js/hooks/use-crotal-ocr.ts` | **Create** — Tesseract worker hook |
+| `resources/js/pages/scanner/index.tsx` | **Modify** — CameraView (real OCR loop), ErrorView (match mockup) |
+
+## What's NOT in scope
+- No OpenCV.js pre-processing (keep minimal)
+- No backend changes (Tesseract runs client-side, existing `/api/animals/by-crotal/{code}` endpoint is sufficient)
+- No new routes or controllers
+- No tests (this is a spike)
+
+## Verification
+1. `npm run build` — compiles without errors
+2. `npm run types:check` — no TypeScript errors
+3. Open scanner on phone/browser → camera starts
+4. Point at crotal image (use `docs/crotal.jpeg` on a second screen as test target)
+5. Verify OCR attempts to read text continuously
+6. If recognized → shows animal card
+7. If timeout → shows updated error screen matching mockup
+8. Manual input still works from error screen
+9. `vendor/bin/pint --dirty --format agent` if any PHP changed (shouldn't be needed)
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/gastongraciani/.REDACTED.jsonl
+
+---
+
+can merge a develop with clear merge commit and push?
+
+---
+
+sadly doesnt work. can think workarounds to improve the recognization fo the black text over yellow backgorund of the krotal?
+
+---
+
+q signficia el ocr?
+
+---
+
+no tengo un crotal pero tengo una correa del mismo amarillo con letras negras (similar), veo las letras claras, pero no escanea, hay un regex para el formato del crotal q lo impide?
+
+---
+
+se queda en nada , pero la imagen reconoce bien el texto, osea tiene buen contraste, pero tesseract pare que no lo lee en si (probe con todo lo que tiene texto en el escritorio, nada reconoce el texto)
+
+tiene pinta que no reconoce el contraste del texto en si, por que en el debug, se distingue claro el texto, por lo menos para un humano, osea que lo contrasta bien, pero el codigo no es capaz de indentificar eso?
+
+tiene sentid lo que estoy explicando?
+
+---
+
+es100005271694 should return error?
+
+---
+
+podemos hacer que quede en el ingresar manualmente lo que detecto como texto cuando falla para tenerlo como referencia, por si interpreto mal un caracter no pedir ingreso manual todo?
