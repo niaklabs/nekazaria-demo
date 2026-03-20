@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\BirthRegistrationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('nacimientos', [BirthRegistrationController::class, 'store'])->name('nacimientos.store');
 
     Route::get('subexplotaciones/{subExploitation}', [SubExploitationController::class, 'show'])->name('subexplotaciones.show');
+    Route::get('subexplotaciones/{subExploitation}/animales', [AnimalController::class, 'index'])->name('subexplotaciones.animales.index');
 
     Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
     Route::post('chat/messages', [ChatController::class, 'store'])->name('chat.store');

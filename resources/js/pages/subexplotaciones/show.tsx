@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { Baby, CheckCircle2, List, FileText, ScanLine, Syringe, Timer, TriangleAlert } from 'lucide-react';
+import { index as animalesIndex } from '@/actions/App/Http/Controllers/AnimalController';
 import { show as subExploitationShow } from '@/actions/App/Http/Controllers/SubExploitationController';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -190,7 +191,7 @@ export default function SubExploitationShow({ subExploitation, animalsCount, sem
                         ACCIONES RÁPIDAS
                     </span>
                     <div className="flex gap-3">
-                        <ActionButton icon={List} label="Ver animales" />
+                        <ActionButton icon={List} label="Ver animales" href={animalesIndex.url(subExploitation.id)} />
                         <ActionButton icon={FileText} label="Trámites" href="/normativa" />
                         <ActionButton icon={Syringe} label="Campañas" href="/normativa" />
                     </div>
