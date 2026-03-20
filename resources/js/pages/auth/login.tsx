@@ -7,7 +7,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { useTranslation } from '@/hooks/use-translation';
 import AuthLayout from '@/layouts/auth-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
@@ -24,14 +23,12 @@ export default function Login({
     canResetPassword,
     canRegister,
 }: Props) {
-    const { t } = useTranslation();
-
     return (
         <AuthLayout
-            title={t('login.title')}
-            description={t('login.description')}
+            title="Iniciá sesión en tu cuenta"
+            description="Ingresá tu email y contraseña para acceder"
         >
-            <Head title={t('login.head_title')} />
+            <Head title="Iniciar sesión" />
 
             <Form
                 {...store.form()}
@@ -42,7 +39,7 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">{t('login.email')}</Label>
+                                <Label htmlFor="email">Correo electrónico</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -58,14 +55,14 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">{t('login.password')}</Label>
+                                    <Label htmlFor="password">Contraseña</Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
                                             className="ml-auto text-sm"
                                             tabIndex={5}
                                         >
-                                            {t('login.forgot_password')}
+                                            ¿Olvidaste tu contraseña?
                                         </TextLink>
                                     )}
                                 </div>
@@ -75,7 +72,7 @@ export default function Login({
                                     required
                                     tabIndex={2}
                                     autoComplete="current-password"
-                                    placeholder={t('login.password_placeholder')}
+                                    placeholder="Contraseña"
                                 />
                                 <InputError message={errors.password} />
                             </div>
@@ -86,7 +83,7 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">{t('login.remember_me')}</Label>
+                                <Label htmlFor="remember">Recordarme</Label>
                             </div>
 
                             <Button
@@ -97,15 +94,15 @@ export default function Login({
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                {t('login.submit')}
+                                Iniciar sesión
                             </Button>
                         </div>
 
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
-                                {t('login.no_account')}{' '}
+                                ¿No tenés cuenta?{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    {t('login.sign_up')}
+                                    Registrate
                                 </TextLink>
                             </div>
                         )}
