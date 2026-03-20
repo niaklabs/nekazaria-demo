@@ -48,9 +48,8 @@ function extractCrotalFromLines(text: string): string | null {
 /**
  * Preprocesses a video frame for OCR:
  * 1. Crops to the center ROI (scanning rectangle area)
- * 2. Upscales 3x for better Tesseract accuracy
- * 3. Binarizes using yellow-channel isolation: yellow background → white, dark text → black
- * 4. Applies a sharpening pass via unsharp mask
+ * 2. Upscales 2x for better Tesseract accuracy
+ * 3. Binarizes: dark text → black, everything else → white
  */
 function preprocessFrame(
     video: HTMLVideoElement,
@@ -60,20 +59,24 @@ function preprocessFrame(
     const vw = video.videoWidth;
     const vh = video.videoHeight;
 
-    // Crop center ROI matching the on-screen scanning rectangle proportions (w:72/h:48 of viewport)
+    if (vw === 0 || vh === 0) {
+        return;
+    }
+
+    // Crop center ROI matching the on-screen scanning rectangle proportions
     const roiW = Math.round(vw * 0.55);
     const roiH = Math.round(vh * 0.45);
     const roiX = Math.round((vw - roiW) / 2);
     const roiY = Math.round((vh - roiH) / 2);
 
-    // Draw full frame to source canvas first
+    // Draw full frame to source canvas
     srcCanvas.width = vw;
     srcCanvas.height = vh;
     const srcCtx = srcCanvas.getContext('2d', { willReadFrequently: true })!;
     srcCtx.drawImage(video, 0, 0);
 
-    // Upscale factor — Tesseract needs ~300 DPI, phone cameras at 10-15cm give ~70-100 DPI equivalent
-    const scale = 3;
+    // Upscale 2x (enough for Tesseract, smaller = faster)
+    const scale = 2;
     const outW = roiW * scale;
     const outH = roiH * scale;
 
@@ -84,7 +87,7 @@ function preprocessFrame(
     // Draw cropped + upscaled ROI
     ctx.drawImage(srcCanvas, roiX, roiY, roiW, roiH, 0, 0, outW, outH);
 
-    // Binarize: isolate dark text from yellow background
+    // Binarize: isolate dark text from background
     const imageData = ctx.getImageData(0, 0, outW, outH);
     const d = imageData.data;
 
@@ -96,10 +99,8 @@ function preprocessFrame(
         // Luminance-weighted grayscale
         const gray = 0.299 * r + 0.587 * g + 0.114 * b;
 
-        // Yellow detection: high R, high G, low B → background
-        // Dark pixels (text): low luminance → black
-        // Adaptive threshold: anything darker than ~40% gray → black text
-        const isText = gray < 120;
+        // Threshold: dark pixels (text) → black, light pixels (background) → white
+        const isText = gray < 130;
 
         d[i] = isText ? 0 : 255;
         d[i + 1] = isText ? 0 : 255;
@@ -109,7 +110,7 @@ function preprocessFrame(
     ctx.putImageData(imageData, 0, 0);
 }
 
-interface OcrResult {
+export interface OcrResult {
     code: string | null;
     rawText: string;
 }
@@ -127,6 +128,7 @@ interface UseCrotalOcrReturn {
 export function useCrotalOcr(): UseCrotalOcrReturn {
     const workerRef = useRef<Tesseract.Worker | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
+    const processingRef = useRef(false);
     const initPromiseRef = useRef<Promise<Tesseract.Worker> | null>(null);
 
     const getWorker = useCallback(async (): Promise<Tesseract.Worker> => {
@@ -140,8 +142,6 @@ export function useCrotalOcr(): UseCrotalOcrReturn {
                 await worker.setParameters({
                     tessedit_char_whitelist:
                         'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
-                    // PSM 6: assume a single uniform block of text
-                    tessedit_pageseg_mode: '6' as unknown as string,
                 });
                 workerRef.current = worker;
 
@@ -152,16 +152,19 @@ export function useCrotalOcr(): UseCrotalOcrReturn {
         return initPromiseRef.current;
     }, []);
 
+    // Stable reference — does not change between renders
     const recognizeFrame = useCallback(
         async (
             video: HTMLVideoElement,
             srcCanvas: HTMLCanvasElement,
             procCanvas: HTMLCanvasElement,
         ): Promise<OcrResult> => {
-            if (isProcessing) {
+            // Use ref for guard so this callback stays stable
+            if (processingRef.current) {
                 return { code: null, rawText: '' };
             }
 
+            processingRef.current = true;
             setIsProcessing(true);
 
             try {
@@ -178,10 +181,11 @@ export function useCrotalOcr(): UseCrotalOcrReturn {
 
                 return { code: null, rawText: '' };
             } finally {
+                processingRef.current = false;
                 setIsProcessing(false);
             }
         },
-        [getWorker, isProcessing],
+        [getWorker],
     );
 
     const terminate = useCallback(() => {
