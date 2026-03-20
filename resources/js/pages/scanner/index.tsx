@@ -1,5 +1,5 @@
 import { Head, router } from '@inertiajs/react';
-import { ArrowLeft, Camera, CameraOff, FlashlightOff, Flashlight, Search, X } from 'lucide-react';
+import { Camera, CameraOff, FlashlightOff, Flashlight, Search, Sun, Focus, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
@@ -20,12 +20,69 @@ interface AnimalResult {
     };
 }
 
-type ScannerState = 'camera' | 'scanning' | 'result' | 'error' | 'manual' | 'permission_denied';
+type ScannerState = 'instructions' | 'camera' | 'scanning' | 'result' | 'error' | 'manual' | 'permission_denied';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Mi Explotación', href: '/dashboard' },
     { title: 'Escanear Crotal', href: '/scanner' },
 ];
+
+function ScanInstructions({ onStart, onManual }: { onStart: () => void; onManual: () => void }) {
+    const steps = [
+        {
+            icon: <Sun className="size-6 text-[#E53935]" />,
+            title: 'Buena iluminación y cobertura',
+            description: 'Asegúrate de estar en un lugar bien iluminado y con cobertura de señal móvil.',
+        },
+        {
+            icon: <Focus className="size-6 text-[#E53935]" />,
+            title: 'Enfoca el crotal',
+            description: 'Dirige la cámara hacia el crotal del animal, a unos 10-15 cm de distancia.',
+        },
+        {
+            icon: <ScanLine className="size-6 text-[#E53935]" />,
+            title: 'Espera al reconocimiento',
+            description: 'Mantén el teléfono estable y espera a que el sistema identifique el código automáticamente.',
+        },
+    ];
+
+    return (
+        <div className="flex flex-1 flex-col justify-between p-6">
+            <div className="flex flex-col gap-6">
+                <div className="text-center">
+                    <Camera className="mx-auto size-16 text-[#E53935]" />
+                    <h2 className="mt-4 text-2xl font-bold">Escanear crotal</h2>
+                    <p className="mt-2 text-sm text-[#757575]">
+                        Sigue estos pasos para identificar al animal de forma rápida y sencilla.
+                    </p>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    {steps.map((step, i) => (
+                        <div key={i} className="flex items-start gap-4 border-2 border-black p-4">
+                            <div className="flex size-10 shrink-0 items-center justify-center bg-[#FFEBEE]">
+                                {step.icon}
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold">{`${i + 1}. ${step.title}`}</p>
+                                <p className="mt-1 text-xs text-[#757575]">{step.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="flex flex-col gap-2 pt-6">
+                <button onClick={onStart} className="w-full bg-[#E53935] py-[18px] text-center text-sm font-bold text-white">
+                    Comenzar escaneo
+                </button>
+                <button onClick={onManual} className="w-full border-2 border-black py-[18px] text-center text-sm font-semibold">
+                    Introducir código manualmente
+                </button>
+            </div>
+        </div>
+    );
+}
 
 function CameraView({ onResult, onError }: { onResult: (animal: AnimalResult) => void; onError: () => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -268,7 +325,7 @@ function PermissionDenied({ onManual }: { onManual: () => void }) {
 }
 
 export default function ScannerIndex() {
-    const [state, setState] = useState<ScannerState>('camera');
+    const [state, setState] = useState<ScannerState>('instructions');
     const [animal, setAnimal] = useState<AnimalResult | null>(null);
 
     const handleResult = (a: AnimalResult) => {
@@ -283,6 +340,9 @@ export default function ScannerIndex() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Escanear Crotal" />
             <div className="flex h-full flex-col">
+                {state === 'instructions' && (
+                    <ScanInstructions onStart={() => setState('camera')} onManual={() => setState('manual')} />
+                )}
                 {state === 'camera' && (
                     <div className="relative min-h-[500px] flex-1">
                         <CameraView onResult={handleResult} onError={() => { if (state === 'camera') handleError(); }} />
