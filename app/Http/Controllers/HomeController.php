@@ -10,11 +10,12 @@ class HomeController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        $userName = $request->user()->name;
-        $firstName = explode(' ', trim($userName))[0];
+        $user = $request->user();
+        $firstName = explode(' ', trim($user->name))[0];
 
         return Inertia::render('home', [
             'firstName' => $firstName,
+            'avatar' => $user->avatar,
         ]);
     }
 }

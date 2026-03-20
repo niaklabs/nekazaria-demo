@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/app-layout';
 
 type HomeProps = {
     firstName: string;
+    avatar: string | null;
 };
 
 const actionCards = [
@@ -55,7 +56,7 @@ const quickActions = [
 ];
 
 export default function Home() {
-    const { firstName } = usePage<{ firstName: string }>().props;
+    const { firstName, avatar } = usePage<HomeProps>().props;
 
     return (
         <AppLayout>
@@ -68,7 +69,11 @@ export default function Home() {
                         <p className="text-sm text-neutral-500">¿En qué puedo ayudarte hoy?</p>
                     </div>
                     <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-red-50">
-                        <span className="text-3xl">🐂</span>
+                        {avatar ? (
+                            <img src={avatar} alt={firstName} className="h-full w-full object-cover" />
+                        ) : (
+                            <span className="text-3xl">🐂</span>
+                        )}
                     </div>
                 </div>
 

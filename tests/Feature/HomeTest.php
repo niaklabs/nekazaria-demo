@@ -32,6 +32,26 @@ test('home page extracts first name from user name', function () {
         );
 });
 
+test('home page includes user avatar', function () {
+    $user = User::factory()->create(['avatar' => 'https://example.com/photo.jpg']);
+
+    $this->actingAs($user)
+        ->get('/')
+        ->assertInertia(fn ($page) => $page
+            ->where('avatar', 'https://example.com/photo.jpg')
+        );
+});
+
+test('home page returns null avatar when user has no profile image', function () {
+    $user = User::factory()->create(['avatar' => null]);
+
+    $this->actingAs($user)
+        ->get('/')
+        ->assertInertia(fn ($page) => $page
+            ->where('avatar', null)
+        );
+});
+
 test('login redirects to home page', function () {
     $user = User::factory()->create();
 
