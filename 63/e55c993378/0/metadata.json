@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "63e55c993378",
+  "session_id": "da627cff-eec6-41b3-bb7a-ce297acaac76",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T04:41:37.737461Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Responses/GiltzaLoginResponse.php"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "58b3d1e5-a2cb-45c8-b4a6-ae28ce61c816",
+  "checkpoint_transcript_start": 231,
+  "transcript_lines_at_start": 231,
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 2545,
+    "cache_read_tokens": 298804,
+    "output_tokens": 947,
+    "api_call_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T04:41:37.704285Z",
+    "agent_lines": 0,
+    "human_added": 41714,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 41714,
+    "agent_percentage": 0
+  }
+}

@@ -1,0 +1,24 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+i need mock, after a success login, a way to show how could be a integration with a 3hr govermentally auth system, that use a digital key.
+
+this should be something
+
+"Firmando la sesion con Giltza" or something like that in spansh
+
+and do a fancy animation following current design guidelines that indicate that the app is super secure, and realiably. 
+
+can think and implement something commit and push when finish
+
+### Prompt 2
+
+commit and push
+
+### Prompt 3
+
+sure u implement the redirect, because when im login im still going to the index gome
+
