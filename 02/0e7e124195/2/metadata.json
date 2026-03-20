@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "020e7e124195",
+  "session_id": "886ff6d0-bc1e-402a-b73a-27ae2adbd1ce",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T01:42:48.407292Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".worktrees/IAG-797/app/Http/Controllers/HomeController.php",
+    ".worktrees/IAG-797/config/fortify.php",
+    ".worktrees/IAG-797/resources/js/components/app-sidebar.tsx",
+    ".worktrees/IAG-797/resources/js/pages/home.tsx",
+    ".worktrees/IAG-797/routes/web.php",
+    "app/Http/Controllers/HomeController.php",
+    "config/fortify.php",
+    "docs/crotal.jpeg",
+    "resources/js/components/app-sidebar.tsx",
+    "resources/js/pages/home.tsx",
+    "routes/web.php",
+    "tests/Feature/Auth/AuthenticationTest.php",
+    "tests/Feature/Auth/EmailVerificationTest.php",
+    "tests/Feature/Auth/RegistrationTest.php",
+    "tests/Feature/Auth/VerificationNotificationTest.php",
+    "tests/Feature/ExampleTest.php",
+    "tests/Feature/HomeTest.php"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 108,
+    "cache_creation_tokens": 77170,
+    "cache_read_tokens": 6001865,
+    "output_tokens": 18768,
+    "api_call_count": 94
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T01:42:48.333981Z",
+    "agent_lines": 209,
+    "human_added": 156,
+    "human_modified": 8,
+    "human_removed": 0,
+    "total_committed": 373,
+    "agent_percentage": 56.03217158176944
+  }
+}
