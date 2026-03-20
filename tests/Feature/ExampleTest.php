@@ -1,7 +1,7 @@
 <?php
 
-it('redirects to dashboard', function () {
+it('redirects unauthenticated users to login', function () {
     $response = $this->get('/');
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect('/login');
 });

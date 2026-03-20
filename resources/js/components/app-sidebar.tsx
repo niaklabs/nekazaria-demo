@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Baby, Bell, Camera, Home, MessageCircle } from 'lucide-react';
+import { Baby, Bell, Camera, Home, LayoutDashboard, MessageCircle } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -12,14 +12,18 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Mi Explotación',
-        href: dashboard(),
+        title: 'Inicio',
+        href: '/',
         icon: Home,
+    },
+    {
+        title: 'Mi Explotación',
+        href: '/dashboard',
+        icon: LayoutDashboard,
     },
     {
         title: 'Escanear Crotal',
@@ -50,7 +54,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href="/" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
