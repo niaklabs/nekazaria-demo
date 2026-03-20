@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "b442da13ae57",
+  "session_id": "ce228246-35c1-44d1-b898-6ccc212b0bcc",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T03:11:32.751521Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "resources/js/hooks/use-crotal-ocr.ts"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "bb013080-7740-4e37-8456-9db8c6b75654",
+  "checkpoint_transcript_start": 238,
+  "transcript_lines_at_start": 238,
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 81652,
+    "cache_read_tokens": 656671,
+    "output_tokens": 5239,
+    "api_call_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T03:11:32.682742Z",
+    "agent_lines": 12,
+    "human_added": 41716,
+    "human_modified": 9,
+    "human_removed": 0,
+    "total_committed": 41737,
+    "agent_percentage": 0.028751467522821476
+  }
+}
