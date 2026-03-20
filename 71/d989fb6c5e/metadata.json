@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "71d989fb6c5e",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/Http/Controllers/HomeController.php",
+    "app/Models/User.php",
+    "database/factories/UserFactory.php",
+    "database/migrations/2026_03_20_234414_add_avatar_to_users_table.php",
+    "resources/js/pages/home.tsx",
+    "tests/Feature/HomeTest.php"
+  ],
+  "sessions": [
+    {
+      "metadata": "/71/d989fb6c5e/0/metadata.json",
+      "transcript": "/71/d989fb6c5e/0/full.jsonl",
+      "context": "/71/d989fb6c5e/0/context.md",
+      "content_hash": "/71/d989fb6c5e/0/content_hash.txt",
+      "prompt": "/71/d989fb6c5e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 20,
+    "cache_creation_tokens": 35951,
+    "cache_read_tokens": 584933,
+    "output_tokens": 4708,
+    "api_call_count": 18
+  }
+}
