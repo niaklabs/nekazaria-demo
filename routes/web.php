@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('auth/giltza', fn () => Inertia\Inertia::render('auth/giltza'))->name('auth.giltza');
     Route::get('api/animals/by-crotal/{code}', [KrotalScannerController::class, 'lookupByCrotal'])->name('api.animals.by-crotal');
     Route::get('api/animals/random-crotal', [KrotalScannerController::class, 'randomCrotal'])->name('api.animals.random-crotal');
 });
