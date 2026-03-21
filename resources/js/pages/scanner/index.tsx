@@ -216,80 +216,49 @@ function CameraView({
         onResultRef.current = onResult;
     }, [onResult]);
 
+    // Demo mock: simulate scanning and always resolve to a hardcoded crotal
+    const DEMO_CROTAL = 'ES480151123456';
+
     useEffect(() => {
-        const startTime = Date.now();
         let active = true;
-        let lastRawText = '';
 
-        const loop = async () => {
-            while (active && scanningRef.current) {
-                if (
-                    !videoRef.current ||
-                    !srcCanvasRef.current ||
-                    !procCanvasRef.current
-                ) {
-                    await new Promise((r) => setTimeout(r, SCAN_INTERVAL_MS));
-                    continue;
-                }
+        const mockScan = async () => {
+            // Simulate scanning animation for 2 seconds
+            setStatusText('Analizando...');
+            await new Promise((r) => setTimeout(r, 2000));
 
-                if (Date.now() - startTime > SCAN_TIMEOUT_MS) {
-                    scanningRef.current = false;
-                    onErrorRef.current(lastRawText);
+            if (!active || !scanningRef.current) {
+                return;
+            }
 
-                    return;
-                }
+            setDebugText(DEMO_CROTAL);
+            scanningRef.current = false;
+            setStatusText('Crotal detectado, buscando animal...');
 
-                setStatusText('Analizando...');
-                const result = await recognizeFrame(
-                    videoRef.current,
-                    srcCanvasRef.current,
-                    procCanvasRef.current,
+            try {
+                const res = await fetch(
+                    `/api/animals/by-crotal/${encodeURIComponent(DEMO_CROTAL)}`,
                 );
 
-                if (!active || !scanningRef.current) {
+                if (res.ok) {
+                    const animal = await res.json();
+                    onResultRef.current(animal);
+
                     return;
                 }
-
-                if (result.rawText) {
-                    lastRawText = result.rawText;
-                }
-
-                setDebugText(result.rawText || '(nada)');
-
-                if (result.code) {
-                    scanningRef.current = false;
-                    setStatusText('Crotal detectado, buscando animal...');
-
-                    try {
-                        const res = await fetch(
-                            `/api/animals/by-crotal/${encodeURIComponent(result.code)}`,
-                        );
-
-                        if (res.ok) {
-                            const animal = await res.json();
-                            onResultRef.current(animal);
-
-                            return;
-                        }
-                    } catch {
-                        /* fall through */
-                    }
-
-                    onErrorRef.current(result.code);
-                } else {
-                    setStatusText('Enfoca el crotal del animal');
-                }
-
-                await new Promise((r) => setTimeout(r, SCAN_INTERVAL_MS));
+            } catch {
+                /* fall through */
             }
+
+            onErrorRef.current(DEMO_CROTAL);
         };
 
-        loop();
+        mockScan();
 
         return () => {
             active = false;
         };
-    }, [recognizeFrame]);
+    }, []);
 
     return (
         <div className="relative h-full w-full bg-[#1A1A1A]">
