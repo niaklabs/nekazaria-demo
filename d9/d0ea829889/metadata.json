@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "d9d0ea829889",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/worktrees/agent-a99e809a"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d9/d0ea829889/0/metadata.json",
+      "transcript": "/d9/d0ea829889/0/full.jsonl",
+      "context": "/d9/d0ea829889/0/context.md",
+      "content_hash": "/d9/d0ea829889/0/content_hash.txt",
+      "prompt": "/d9/d0ea829889/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 61265,
+    "cache_read_tokens": 206607,
+    "output_tokens": 3219,
+    "api_call_count": 6
+  }
+}
