@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "223f0d85b141",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/worktrees/agent-a99e809a",
+    "resources/js/pages/scanner/index.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/22/3f0d85b141/0/metadata.json",
+      "transcript": "/22/3f0d85b141/0/full.jsonl",
+      "context": "/22/3f0d85b141/0/context.md",
+      "content_hash": "/22/3f0d85b141/0/content_hash.txt",
+      "prompt": "/22/3f0d85b141/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 31593,
+    "cache_read_tokens": 254516,
+    "output_tokens": 2451,
+    "api_call_count": 8
+  }
+}
