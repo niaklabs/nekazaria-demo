@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "231f1fdfa052",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/worktrees/agent-a99e809a",
+    "resources/js/components/app-logo.tsx",
+    "resources/js/pages/auth/giltza.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/23/1f1fdfa052/0/metadata.json",
+      "transcript": "/23/1f1fdfa052/0/full.jsonl",
+      "context": "/23/1f1fdfa052/0/context.md",
+      "content_hash": "/23/1f1fdfa052/0/content_hash.txt",
+      "prompt": "/23/1f1fdfa052/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 26696,
+    "cache_read_tokens": 225698,
+    "output_tokens": 1563,
+    "api_call_count": 8
+  }
+}
