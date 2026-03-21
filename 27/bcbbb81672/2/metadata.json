@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "27bcbbb81672",
+  "session_id": "f442be9c-9fb0-49c3-b224-190af77bf953",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-21T00:30:59.104387Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/worktrees/agent-a99e809a",
+    "resources/js/pages/nacimientos/crear.tsx",
+    "resources/js/pages/scanner/index.tsx"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "28e52266-fdf1-4ccf-b8b4-16c33c83bb03",
+  "token_usage": {
+    "input_tokens": 18,
+    "cache_creation_tokens": 45487,
+    "cache_read_tokens": 687096,
+    "output_tokens": 4976,
+    "api_call_count": 16
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-21T00:30:59.051797Z",
+    "agent_lines": 0,
+    "human_added": 41754,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 41754,
+    "agent_percentage": 0
+  }
+}
