@@ -1,0 +1,5 @@
+what file need replace to dont use laravel icon?
+
+---
+
+a web to generate them from image?
