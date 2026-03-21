@@ -1,6 +1,5 @@
 import { Head, router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import AppLogoIcon from '@/components/app-logo-icon';
 import { home } from '@/routes';
 
 const steps = [
@@ -67,7 +66,7 @@ export default function Giltza() {
                 <div className="flex w-full max-w-md flex-col items-center gap-10">
                     {/* Logo */}
                     <div className="flex flex-col items-center gap-3">
-                        <AppLogoIcon className="size-10 fill-current text-foreground" />
+                        <img src="/nekazaria-logo.png" alt="NekazarIA" className="size-10" />
                         <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                             NekazarIA
                         </span>
