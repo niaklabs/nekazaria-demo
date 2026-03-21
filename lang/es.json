@@ -52,8 +52,8 @@
     "common.save": "Guardar",
     "common.search": "Buscar",
 
-    "login.title": "Iniciá sesión en tu cuenta",
-    "login.description": "Ingresá tu email y contraseña para acceder",
+    "login.title": "Inicia sesión en tu cuenta",
+    "login.description": "Introduce tu email y contraseña para acceder",
     "login.head_title": "Iniciar sesión",
     "login.email": "Correo electrónico",
     "login.password": "Contraseña",
@@ -61,8 +61,8 @@
     "login.forgot_password": "¿Olvidaste tu contraseña?",
     "login.remember_me": "Recordarme",
     "login.submit": "Iniciar sesión",
-    "login.no_account": "¿No tenés cuenta?",
-    "login.sign_up": "Registrate",
+    "login.no_account": "¿No tienes cuenta?",
+    "login.sign_up": "Regístrate",
 
     "password_input.show": "Mostrar contraseña",
     "password_input.hide": "Ocultar contraseña"

@@ -25,8 +25,8 @@ export default function Login({
 }: Props) {
     return (
         <AuthLayout
-            title="Iniciá sesión en tu cuenta"
-            description="Ingresá tu email y contraseña para acceder"
+            title="Inicia sesión en tu cuenta"
+            description="Introduce tu email y contraseña para acceder"
         >
             <Head title="Iniciar sesión" />
 
@@ -100,9 +100,9 @@ export default function Login({
 
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
-                                ¿No tenés cuenta?{' '}
+                                ¿No tienes cuenta?{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    Registrate
+                                    Regístrate
                                 </TextLink>
                             </div>
                         )}

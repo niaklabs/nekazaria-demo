@@ -467,7 +467,7 @@ function ErrorView({
                 </div>
                 <h2 className="text-xl font-bold">No pude leer el crotal</h2>
                 <p className="text-center text-sm text-[#757575]">
-                    Intentá de nuevo o ingresá el número manualmente
+                    Inténtalo de nuevo o introduce el número manualmente
                 </p>
             </div>
 
@@ -489,19 +489,19 @@ function ErrorView({
                 <ul className="flex flex-col gap-2 text-xs text-[#757575]">
                     <li className="flex items-start gap-2">
                         <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-[#F9A825]" />
-                        Limpiá el crotal con un trapo antes de escanear
+                        Limpia el crotal con un trapo antes de escanear
                     </li>
                     <li className="flex items-start gap-2">
                         <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-[#F9A825]" />
-                        Acercá el móvil a 10-15 cm del crotal
+                        Acerca el móvil a 10-15 cm del crotal
                     </li>
                     <li className="flex items-start gap-2">
                         <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-[#F9A825]" />
-                        Buscá buena iluminación, evitá sombras sobre el crotal
+                        Busca buena iluminación, evita sombras sobre el crotal
                     </li>
                     <li className="flex items-start gap-2">
                         <span className="mt-0.5 size-1.5 shrink-0 rounded-full bg-[#F9A825]" />
-                        Mantené el móvil firme y esperá a que enfoque
+                        Mantén el móvil firme y espera a que enfoque
                     </li>
                 </ul>
             </div>
