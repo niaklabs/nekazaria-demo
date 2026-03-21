@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "8485b57ccfb0",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/worktrees/agent-a99e809a",
+    "lang/es.json",
+    "lang/es/auth.php",
+    "lang/es/passwords.php",
+    "lang/es/validation.php",
+    "resources/js/pages/auth/login.tsx",
+    "resources/js/pages/scanner/index.tsx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/84/85b57ccfb0/0/metadata.json",
+      "transcript": "/84/85b57ccfb0/0/full.jsonl",
+      "context": "/84/85b57ccfb0/0/context.md",
+      "content_hash": "/84/85b57ccfb0/0/content_hash.txt",
+      "prompt": "/84/85b57ccfb0/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 62184,
+    "cache_read_tokens": 84795,
+    "output_tokens": 2338,
+    "api_call_count": 2
+  }
+}
