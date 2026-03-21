@@ -88,7 +88,7 @@ export default function Home() {
                                 className="text-[11px] font-bold tracking-[2.5px] text-[#8C8A87]"
                                 style={{ fontFamily: "'Barlow Semi Condensed', sans-serif" }}
                             >
-                                RESUMEN INTELIGENTE AURA
+                                RESUMEN INTELIGENTE
                             </span>
                         </div>
                         <div
