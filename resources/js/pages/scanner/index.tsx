@@ -575,6 +575,16 @@ export default function ScannerIndex() {
     const [lastDetectedCode, setLastDetectedCode] = useState('');
 
     const handleResult = (a: AnimalResult) => {
+        const params = new URLSearchParams(window.location.search);
+        const returnTo = params.get('returnTo');
+
+        if (returnTo) {
+            const separator = returnTo.includes('?') ? '&' : '?';
+            router.visit(`${returnTo}${separator}crotal=${encodeURIComponent(a.crotal_code)}`);
+
+            return;
+        }
+
         setAnimal(a);
         setState('result');
     };

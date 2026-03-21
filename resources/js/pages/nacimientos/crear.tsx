@@ -111,7 +111,7 @@ function Step1({ subExploitations, onSelect }: { subExploitations: SubExploitati
     );
 }
 
-function Step2({ animals, selectedId, onSelect }: { animals: Animal[]; selectedId: number | null; onSelect: (id: number) => void }) {
+function Step2({ animals, selectedId, onSelect, subExploitationId }: { animals: Animal[]; selectedId: number | null; onSelect: (id: number) => void; subExploitationId: number }) {
     const females = animals.filter((a) => a.sex === 'female' && a.birth_date);
     const [search, setSearch] = useState('');
     const filtered = females.filter((a) => a.crotal_code.includes(search) || (a.name && a.name.toLowerCase().includes(search.toLowerCase())));
@@ -129,7 +129,7 @@ function Step2({ animals, selectedId, onSelect }: { animals: Animal[]; selectedI
                     className="h-[52px] flex-1 bg-[#F5F5F5] px-[18px] text-base md:text-sm"
                 />
                 <button
-                    onClick={() => router.visit('/scanner?returnTo=/nacimientos/crear')}
+                    onClick={() => router.visit(`/scanner?returnTo=${encodeURIComponent(`/nacimientos/crear?sub=${subExploitationId}`)}`)}
                     className="flex size-[52px] shrink-0 items-center justify-center border-2 border-black"
                     title="Escanear crotal"
                 >
@@ -540,6 +540,36 @@ export default function CrearNacimiento({ exploitation, success }: Props) {
 
     const today = new Date().toISOString().split('T')[0];
 
+    // Auto-restore state from scanner return (URL params: sub & crotal)
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const subId = params.get('sub');
+        const crotal = params.get('crotal');
+
+        if (subId && crotal && exploitation) {
+            const sub = exploitation.sub_exploitations.find((s) => s.id === Number(subId));
+            if (sub) {
+                setSubExploitation(sub);
+                const motherBreed = sub.animals.find((a) => a.sex === 'female')?.breed || '';
+                setCalves([{ sex: 'female', breed: motherBreed, name: '', birth_date: today }]);
+
+                const mother = sub.animals.find(
+                    (a) => a.sex === 'female' && a.crotal_code === crotal.toUpperCase(),
+                );
+                if (mother) {
+                    setMotherId(mother.id);
+                    setCalves([{ sex: 'female', breed: mother.breed, name: '', birth_date: today }]);
+                    setStep(2);
+                } else {
+                    setStep(1);
+                }
+
+                // Clean up URL params
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        }
+    }, []);
+
     const handleSubSelect = (sub: SubExploitation) => {
         setSubExploitation(sub);
         const motherBreed = sub.animals.find((a) => a.sex === 'female')?.breed || '';
@@ -617,7 +647,7 @@ export default function CrearNacimiento({ exploitation, success }: Props) {
                     </div>
                 )}
                 {step === 0 && exploitation && <Step1 subExploitations={exploitation.sub_exploitations} onSelect={handleSubSelect} />}
-                {step === 1 && subExploitation && <Step2 animals={subExploitation.animals} selectedId={motherId} onSelect={handleMotherSelect} />}
+                {step === 1 && subExploitation && <Step2 animals={subExploitation.animals} selectedId={motherId} onSelect={handleMotherSelect} subExploitationId={subExploitation.id} />}
                 {step === 2 && subExploitation && <Step3 animals={subExploitation.animals} selectedId={fatherId} onSelect={setFatherId} onSkip={() => { setFatherId(null); setStep(3); }} />}
                 {step === 3 && subExploitation && (
                     <Step4
